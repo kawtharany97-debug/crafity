@@ -679,30 +679,18 @@ export default function App() {
                           <span className="text-2xl block mb-1">📦</span>
                           <span className="text-[9px] tracking-wider uppercase font-semibold text-stone-400">Preview</span>
                         </div>
-
-                        <label className="absolute bottom-0 left-0 right-0 bg-[#4b3d39]/90 text-white text-[10px] tracking-wider uppercase text-center py-2 cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity">
-                          {t.uploadPhoto}
-                          <input type="file" accept="image/*" className="hidden" onChange={(e) => handleImageUpload(currentCategoryIndex, itemIndex, e)} />
-                        </label>
                       </div>
 
                       <div className="pt-4 space-y-1">
-                        <input 
-                          type="text"
-                          value={formattedPrice}
-                          placeholder={t.inputPricePlaceholder}
-                          onChange={(e) => handleItemMetaChange(currentCategoryIndex, itemIndex, "price", e.target.value)}
-                          className="text-sm font-bold text-[#4b3d39] bg-transparent border-none w-full outline-none p-0 focus:ring-0"
-                        />
+  {/* Secure static text representation */}
+  <div className="text-sm font-bold text-[#4b3d39]">
+    {formattedPrice}
+  </div>
 
-                        <input 
-                          type="text"
-                          value={item.name}
-                          placeholder={t.inputNamePlaceholder}
-                          onChange={(e) => handleItemMetaChange(currentCategoryIndex, itemIndex, "name", e.target.value)}
-                          className="text-xs text-stone-500 bg-transparent border-none w-full outline-none p-0 focus:ring-0 font-medium"
-                        />
-                      </div>
+  <div className="text-xs text-stone-500 font-medium">
+    {item.name}
+  </div>
+</div>
 
                       <AnimatePresence>
                         {isExpanded && (
