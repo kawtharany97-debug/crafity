@@ -500,7 +500,7 @@ export default function App() {
                 <div className="pt-4 flex flex-wrap items-center gap-4">
                   <button
                     onClick={() => sendOrderToWhatsApp(activeSlide)}
-                    className="px-8 py-3.5 rounded-full bg-[#d9779b] hover:bg-[#c56285] text-white font-medium text-sm transition shadow-[0_10px_25px_rgba(217,119,155,0.3)] hover:scale-[1.02] active:scale-[0.98]"
+                    className="px-8 py-3.5 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white font-medium text-sm transition shadow-[0_10px_25px_rgba(16,185,129,0.25)] hover:scale-[1.02] active:scale-[0.98]"
                   >
                     {t.orderWhatsapp}
                   </button>
