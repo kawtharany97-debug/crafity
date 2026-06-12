@@ -20,29 +20,35 @@ export default function App() {
     }));
   };
 
-  // Updated Fetch logic
+  // Fix: Explicitly define the state and the fetcher inside the component
   useEffect(() => {
+    // 1. Define the function clearly inside the useEffect to avoid scope issues
     async function fetchProducts() {
-      // 1. Fetch ALL products at once from the database
-      const { data, error } = await supabase.from('products').select('*');
-      
-      if (error) {
-        console.error("Error loading products:", error);
-      } else {
-        // 2. Map the data from the database to the format your UI expects
-        // We use your database field 'image_url' to fill the 'image' field in your UI
-        const formattedData = data.map(item => ({
+      try {
+        const { data, error } = await supabase.from('products').select('*');
+        
+        if (error) {
+          console.error("Supabase Error:", error);
+          return;
+        }
+
+        // 2. Map data
+        const formattedData = (data || []).map(item => ({
           ...item,
-          image: item.image_url, // Maps DB image_url to UI 'image'
-          price: `${item.price} $` // Formats price to include the $ sign
+          image: item.image_url, 
+          price: `${item.price} $`
         }));
         
-        setMacrameProducts(formattedData || []);
+        // 3. This MUST work now
+        setMacrameProducts(formattedData);
+        
+      } catch (err) {
+        console.error("Unexpected Error:", err);
       }
     }
     
     fetchProducts();
-  }, []); // Runs once when the app loads
+  }, []); // Empty array = run once on mount
    
   // Unified Premium Slider Source Dataset
   const showcaseProducts = [
