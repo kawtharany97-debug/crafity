@@ -20,94 +20,57 @@ export default function App() {
     }));
   };
 
-  // Fetch logic
-  useEffect(() => {
-    async function fetchProducts() {
-      const { data, error } = await supabase.from('products').select('*');
-      if (error) console.error("Error loading products:", error);
-      else setMacrameProducts(data || []);
-    }
-    
-    if (selectedCategory === "Macrame" || selectedCategory === "المكرامية") {
-      fetchProducts();
-    }
-  }, [selectedCategory]);
+  // 1. Unified state for all products
+const [allProducts, setAllProducts] = useState([]);
+
+  // 1. Unified state for all products
+const [allProducts, setAllProducts] = useState([]);
+
+// 3. Logic to determine what to show
+const isSupabaseCategory = (catName) => {
+  // Map your display names to database category keys
+  const map = {
+    "Macrame": "macrame", "المكرامية": "macrame",
+    "Beads": "beads", "خرز": "beads",
+    "Resin Art": "resin", "أعمال الريزن": "resin",
+    "Candles": "candles", "شمع": "candles",
+    "Crochet Art": "crochet", "كروشيه": "crochet",
+    "Giftbox": "giftbox", "حزمة هدايا": "giftbox",
+    "Gypsum Art": "gypsum", "كونكريت": "gypsum",
+    "Soap Art": "soap", "صابون": "soap",
+    "Supplies": "supplies", "مواد أوّليّة": "supplies",
+    };
+  return map[catName];
+};
+
+const categoryKey = isSupabaseCategory(selectedCategory);
+const displayedItems = categoryKey 
+  ? allProducts.filter(item => item.category === categoryKey)
+  : currentCategoryBlock?.items || [];
 
   // Categories data remains unchanged...
   const [categoriesData, setCategoriesData] = useState({
   English: [
-    { 
-      categoryName: "Macrame", 
-      icon: "/cat-macrame.jpg", 
-      items: [
-          { id: "mac-1", name: "Boho Macrame Mirror", price: "20,00 $", image: "macrame/macrame1.jpg", inStock: true, description: "Beautifully woven boho wall mirror with complex geometric macrame fringes, perfect for rustic bedrooms." },
-          { id: "mac-2", name: "Macrame Table Runner", price: "25,00 $", image: "macrame/macrame2.jpg", inStock: true, description: "Elegant natural cotton cords woven into a gorgeous table runner. Elevates casual dining or wedding feasts." },
-          { id: "mac-3", name: "Boho Wall Hanging Trio", price: "30,00 $", image: "macrame/macrame3.jpg", inStock: true, description: "A set of three mini wooden dowel tapestries with alternating diamond pattern works." },
-          { id: "mac-4", name: "Macrame Shoulder Bag", price: "18,00 $", image: "macrame/macrame4.jpg", inStock: true, description: "Sturdy, lightweight crossbody bag crafted from durable twisted cotton fibers with matching inner lining." },
-          { id: "mac-5", name: "Macrame Lamp Shade", price: "35,00 $", image: "macrame/macrame5.jpg", inStock: true, description: "Exquisite ceiling or bedside lamp decoration that diffuses gentle pattern shadows around the room." },
-          { id: "mac-6", name: "Macrame Evil Eye Decor", price: "15,00 $", image: "macrame/macrame6.jpg", inStock: true, description: "Traditional protective design incorporated into an attractive modern macrame hoop arrangement." },
-          { id: "mac-7", name: "Macrame Clutch & Sandals Set", price: "40,00 $", image: "macrame/macrame7.jpg", inStock: true, description: "A bespoke matching ensemble featuring a neat summer clutch and lightweight woven strap details." },
-          { id: "mac-8", name: "Grand Boho Wall Tapestry", price: "55,00 $", image: "macrame/macrame8.jpg", inStock: true, description: "An expansive, intricate luxury fiber statement piece that anchors large living areas beautifully." }
-        ] 
-      },
-      { categoryName: "Resin Art", icon: "/cat-resin.jpg", items: [{ id: "res-1", name: "Ocean Coaster Set", price: "32,00 $", image: "resin/resin-1.jpg", inStock: true, description: "Glossy epoxy resin coasters capturing a multi-tonal marine shoreline look complete with synthetic sand texture." }] },
-      { categoryName: "Candles", icon: "/cat-candles.jpg", items: [{ id: "can-1", name: "Scented Soy Candle", price: "18,00 $", image: "candles/candles1.jpg", inStock: true, description: "Eco-friendly natural wax poured with rich therapeutic woodsy oil scents and clean wood wicks." }] },
-      { categoryName: "Handmade Soap", icon: "/cat-soap.jpg", items: [{ id: "soap-1", name: "Organic Lavender Soap", price: "8,00 $", image: "soap/soap-1.jpg", inStock: true, description: "Cold-processed skin nourishing blocks infused with organic botanicals and soothing absolute oils." }] },
-      { 
-        categoryName: "Tools & Supplies", 
-        icon: "/cat-supplies.jpg", 
-        items: [
-          { id: "tool-1", name: "1 cm barbie pink ribbon (22 meter)", price: "1,00 $", image: "/images/tools-1.jpg", inStock: true, description: "High sheen vibrant satin ribbon roll suited perfectly for luxury package design and bows." }, 
-          { id: "tool-2", name: "1 cm cerulean blue ribbon (22 meter)", price: "1,00 $", image: "/images/tools-2.jpg", inStock: true, description: "Durable textile ribbon spool showcasing deep cerulean tones for craft accents." },
-          { id: "mat-1", name: "Premium Cotton Cord", price: "15,00 $", image: "/images/materials-1.jpg", inStock: true, description: "Ultra-soft single-strand pure cord rolls giving sharp definition to elaborate knot systems." }
-        ] 
-      },
-      { categoryName: "Souvenir", icon: "/cat-giftbox.jpg", items: [{ id: "souv-1", name: "Custom Wedding Favors", price: "50,00 $", image: "/images/souvenir-1.jpg", inStock: false, description: "Tailored gift combinations fully personalizable for wedding events, anniversaries, or corporate events." }] },
-      { categoryName: "Crochet", icon: "/cat-crochet.jpg", items: [{ id: "cro-1", name: "Cozy Crochet Beanie", price: "25,00 $", image: "crochet/crochet1.jpg", inStock: true, description: "Chunky premium knit yarn caps ensuring comforting head insulation along with casual winter flair." }] },
-      { categoryName: "Gypsum", icon: "/cat-gypsum.jpg", items: [{ id: "gyp-1", name: "Minimalist Tray", price: "20,00 $", image: "gypsum/gypsum1.jpg", inStock: true, description: "Sleek, sealed aggregate cast serving tray styled neatly for perfumes, keys, or cosmetics." }] },
-      { categoryName: "Beads", icon: "/cat-beads.jpg", items: [
-    { 
-      id: "bead-1", 
-      name: "Beaded Bag", 
-      price: "45,00 $", 
-      image: "beads/beads1.jpg", 
-      inStock: true, 
-      description: "Handcrafted intricate beaded bag for formal occasions." 
-    }
-  ] 
-}
-    ],
-    Arabic: [
-      { 
-        categoryName: "المكرامية", 
-        icon: "/cat-macrame.jpg", 
-        items: [
-          { id: "mac-1", name: "مرآة مكرامية بوهيمية", price: "20,00 $", image: "macrame/macrame1.jpg", inStock: true, description: "مرآة حائط بوهيمية منسوجة بشكل جميل مع حواف مكرامية هندسية معقدة، مثالية لغرف النوم الريفية." },
-          { id: "mac-2", name: "مفرش طاولة مكرامية", price: "25,00 $", image: "macrame/macrame2.jpg", inStock: true, description: "خيوط قطنية طبيعية أنيقة منسوجة في مفرش طاولة رائع لتزيين غرف الطعام أو حفلات الزفاف." },
-          { id: "mac-3", name: "مجموعة تعليقات حائط ثلاثية", price: "30,00 $", image: "macrame/macrame3.jpg", inStock: true, description: "مجموعة من ثلاث قطع منسوجات خشبية صغيرة بنمط متبادل من عقد المكرامية المتقاطعة." },
-          { id: "mac-4", name: "حقيبة كتف مكرامية أنيقة", price: "18,00 $", image: "macrame/macrame4.jpg", inStock: true, description: "حقيبة كروس متينة وخفيفة الوزن مصنوعة من ألياف القطن الملتوية المتينة مع بطانة داخلية مطابقة." },
-          { id: "mac-5", name: "غطاء مصباح مكرامية فخم", price: "35,00 $", image: "macrame/macrame5.jpg", inStock: true, description: "ديكور رائع لمصباح السقف أو السرير ينشر ظلالاً ونقوشاً دافئة وناعمة في جميع أنحاء الغرفة." },
-          { id: "mac-6", name: "تعليقة مكرامية العين الحارسة", price: "15,00 $", image: "macrame/macrame6.jpg", inStock: true, description: "تصميم تقليدي مدمج في إطار مكرامية دائري حديث وجذاب للغاية." },
-          { id: "mac-7", name: "طقم حقيبة مكرامية وصندل يدوياً", price: "40,00 $", image: "macrame/macrame7.jpg", inStock: true, description: "طقم صيفي متناسق يتميز بحقيبة يد أنيقة وصندل خفيف الوزن مع تفاصيل منسوجة بدقة." },
-          { id: "mac-8", name: "نسيج حائط بوهيمي كبير", price: "55,00 $", image: "macrame/macrame8.jpg", inStock: true, description: "قطعة فنية جدارية فاخرة وواسعة تضفي لمسة جمالية دافئة على الصالات الكبيرة." }
-        ] 
-      },
-      { categoryName: "أعمال الريزن", icon: "/cat-resin.jpg", items: [{ id: "res-1", name: "طقم قواعد أكواب البحر", price: "32,00 $", image: "resin/resin1.jpg", inStock: true, description: "قواعد أكواب لامعة من راتنج الإيبوكسي تجسد مظهر شاطئ البحر متعدد النغتات مع رمال حقيقية." }] },
-      { categoryName: "الشموع", icon: "/cat-candles.jpg", items: [{ id: "can-1", name: "شمعة الصويا المعطرة", price: "18,00 $", image: "candles/candles1.jpg", inStock: true, description: "شمع صويا طبيعي صديق للبيئة غني بزيوت عطرية خشبية علاجية وفتائل خشبية نظيفة." }] },
-      { categoryName: "الصابون الطبيعي", icon: "/cat-soap.jpg", items: [{ id: "soap-1", name: "صابون اللافندر العضوي", price: "8,00 $", image: "soap/soap1.jpg", inStock: true, description: "قوالب صابون مغذية للبشرة مصنوعة على البارد ومصنوعة من نباتات عضوية وزيوت أساسية مهدئة." }] },
-      { 
-        categoryName: "الأدوات والمستلزمات", 
-        icon: "/cat-supplies.jpg", 
-        items: [
-          { id: "tool-1", name: "شريط وردي باربي ١ سم (٢٢ متر)", price: "1,00 $", image: "/images/tools-1.jpg", inStock: true, description: "بكرة شريط ستان جائزة وبراقة مثالية لتغليف الهدايا الفاخرة وصنع الفيونكات." }, 
-          { id: "tool-2", name: "شريط أزرق سيروليان ١ سم (٢٢ متر)", price: "1,00 $", image: "/images/tools-2.jpg", inStock: true, description: "بكرة شريط متينة بلون أزرق سيروليان ساحر لإضافة لمسات مميز للأعمال اليدوية." },
-          { id: "mat-1", name: "حبل قطني فاخر", price: "15,00 $", image: "/images/materials-1.jpg", inStock: true, description: "حبال قطنية ناعمة للغاية أحادية الخيط تمنح تحديداً حاداً وواضحاً لعقد المكرامية المعقدة." }
-        ] 
-      },
-      { categoryName: "الهدايا والتذكارات", icon: "/cat-giftbox.jpg", items: [{ id: "souv-1", name: "توزيعات مناسبات خاصة", price: "50,00 $", image: "/images/souvenir-1.jpg", inStock: false, description: "هدايا وتوزيعات مخصصة بالكامل للمناسبات، حفلات الزفاف، أعياد الميلاد أو الشركات." }] },
-      { categoryName: "الكروشيه", icon: "/cat-crochet.jpg", items: [{ id: "cro-1", name: "قبعة كروشيه دافئة", price: "25,00 $", image: "crochet/crochet1.jpg", inStock: true, description: "قبعات كروشيه دافئة مصنوعة من خيوط صوفية مميزة لضمان العزل التام مع مظهر شتوي جذاب." }] },
-      { categoryName: "الجبس", icon: "/cat-gypsum.jpg", items: [{ id: "gyp-1", name: "صينية جبس مينيماليست", price: "20,00 $", image: "gypsum/gypsum1.jpg", inStock: true, description: "صينية تقديم جبسية أنيقة ومصقولة مصممة بشكل بسيط للعطور أو المفاتيح أو مستخدمات التجميل." }] },
-      { categoryName: "خرز", icon: "/cat-beads.jpg", items: [] }
+      { categoryName: "Macrame", icon: "/cat-macrame.jpg"}, 
+      { categoryName: "Resin Art", icon: "/cat-resin.jpg"},
+      { categoryName: "Candles", icon: "/cat-candles.jpg"},
+      { categoryName: "Handmade Soap", icon: "/cat-soap.jpg"},
+      { categoryName: "Tools & Supplies", icon: "/cat-supplies.jpg"}, 
+      { categoryName: "Giftbox", icon: "/cat-giftbox.jpg"}, 
+      { categoryName: "Crochet", icon: "/cat-crochet.jpg"},
+      { categoryName: "Gypsum", icon: "/cat-gypsum.jpg"}, 
+      { categoryName: "Beads", icon: "/cat-beads.jpg"}, 
+  ], 
+  Arabic: [
+      { categoryName: "المكرامية", icon: "/cat-macrame.jpg"}, 
+      { categoryName: "أعمال الريزن", icon: "/cat-resin.jpg"},
+      { categoryName: "الشموع", icon: "/cat-candles.jpg"},
+      { categoryName: "الصابون الطبيعي", icon: "/cat-soap.jpg"}, 
+      { categoryName: "الأدوات والمستلزمات", icon: "/cat-supplies.jpg"}, 
+      { categoryName: "الهدايا والتذكارات", icon: "/cat-giftbox.jpg"}, 
+      { categoryName: "الكروشيه", icon: "/cat-crochet.jpg"},
+      { categoryName: "كونكريت", icon: "/cat-gypsum.jpg"}, 
+      { categoryName: "خرز", icon: "/cat-beads.jpg"},
     ]
   });
    
