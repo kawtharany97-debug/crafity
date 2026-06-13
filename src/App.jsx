@@ -552,10 +552,7 @@ const displayedItems = selectedCategory
                           }}
                         />
                         ) : null}
-                        <div className={`${item.image ? 'hidden' : 'flex'} absolute inset-0 text-center text-stone-300 flex-col items-center justify-center p-4`}>
-                          <span className="text-2xl block mb-1">📦</span>
-                          <span className="text-[9px] tracking-wider uppercase font-semibold text-stone-400">Preview</span>
-                        </div>
+                      
                       </div>
                       <div className="pt-4 space-y-1">
                         <div className="text-sm font-bold text-[#4b3d39]">{formattedPrice}</div>
