@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { supabase } from "./supabaseClient";
 
-const bucketUrl = "https://difogkabffvfdmwyykcc.supabase.co/storage/v1/object/public/";
+const bucketUrl = "https://difogkabffvfdmwyykcc.supabase.co/storage/v1/object/public";
 
 export default function App() {
   const [lang, setLang] = useState("English");
@@ -535,7 +535,7 @@ const displayedItems = selectedCategory
                 <p className="text-xs font-bold text-[#d9779b] uppercase tracking-wider mb-4">{t.allFilter}</p>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                {displayedItems.map((item, itemIndex) => {
+                {displayedItems.map((item) => {
                   const formattedPrice = item.price && item.price.includes('$') ? item.price : `${item.price || "0.00"} $`;
                   const isExpanded = !!expandedDetails[item.id];
                   return (
