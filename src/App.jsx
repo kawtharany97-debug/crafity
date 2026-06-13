@@ -66,25 +66,7 @@ const isSupabaseCategory = (catName) => {
     ]
   });
    
-  // Unified Premium Slider Source Dataset
-  const getShowcaseItems = () => {
-    const labels = ['best-seller', 'new-arrival', 'hot-item', 'trending'];
-    return labels.map(label => {
-      const found = allProducts.find(p => p.label === label);
-      return {
-        id: found?.id || `fallback-${label}`,
-        badge: label.replace('-', ' ').toUpperCase(),
-        name: found?.name || "Coming Soon",
-        price: found?.price ? `${found.price} $` : "0.00 $",
-        image_url: found?.image_url 
-          ? `${bucketUrl}${found.image_url.replace('/images/', '/')}` 
-          : `${bucketUrl}/products/placeholder.jpg`,
-        description: found?.description || "Beautiful handcrafted item."
-        };
-  });
-};
-
-const showcaseProducts = getShowcaseItems();
+const [showcaseProducts, setShowcaseProducts] = useState([]);
 
   // Automatic slide rotation loop
   useEffect(() => {
@@ -93,8 +75,23 @@ const showcaseProducts = getShowcaseItems();
     if (error) {
       console.error("Supabase Error:", error);
     } else {
-      console.log("Data fetched from Supabase:", data); // Check this in Browser Console
+      console.log("Data fetched from Supabase:", data);
       setAllProducts(data || []);
+    const labels = ['best-seller', 'new-arrival', 'hot-item', 'trending'];
+    const items = labels.map(label => {
+      const found = data.find(p => p.label === label);
+      return {
+        id: found?.id || `fallback-${label}`,
+        badge: label.replace('-', ' ').toUpperCase(),
+        name: found?.name || "Coming Soon",
+        price: found?.price ? `${found.price} $` : "0.00 $",
+        image_url: found?.image_url
+          ? `${bucketUrl}${found.image_url.replace('/images/', '/')}` 
+          : `${bucketUrl}/products/placeholder.jpg`,
+        description: found?.description || "Beautiful handcrafted item."
+        };
+      });
+    setShowcaseProducts(items);
     }
   }
   fetchProducts();
