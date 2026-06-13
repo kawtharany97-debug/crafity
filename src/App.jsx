@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { supabase } from './supabaseClient';
 
@@ -13,6 +13,8 @@ export default function App() {
   const [expandedDetails, setExpandedDetails] = useState({});
   const [heroSliderIndex, setHeroSliderIndex] = useState(0);
   const [sliderDirection, setSliderDirection] = useState(1);
+  const [searchTerm, setSearchTerm] = useState('');
+  const resultsRef = useRef(null);
 
   const toggleDetails = (itemId) => {
     setExpandedDetails((prev) => ({
@@ -44,7 +46,7 @@ export default function App() {
       كونكريت: 'gypsum',
       'Soap Art': 'soap',
       صابون: 'soap',
-      Supplies: 'supplies',
+      'Tools & Supplies': 'supplies',
       'مواد أوّليّة': 'supplies',
     };
     return map[catName];
@@ -87,7 +89,12 @@ export default function App() {
       } else {
         console.log('Data fetched from Supabase:', data);
         setAllProducts(data || []);
-        const labels = ['best-seller', 'new-arrival', 'hot-item', 'trending'];
+        const labels = [
+          'best-seller',
+          'new-arrival',
+          'hot-item',
+          'trending-item',
+        ];
         const items = labels.map((label) => {
           const found = data.find((p) => p.label === label);
           return {
@@ -303,12 +310,35 @@ export default function App() {
 
   const dbKey = categoryMap[selectedCategory];
 
-  const displayedItems = selectedCategory
-    ? allProducts.filter((item) => item.category === dbKey)
-    : [];
+  const displayedItems =
+    searchTerm.trim() !== ''
+      ? allProducts.filter((item) =>
+          [
+            item.name,
+            item.nameAr,
+            item.description,
+            item.descriptionAr,
+            item.category,
+          ]
+            .filter(Boolean)
+            .some((field) =>
+              field.toLowerCase().includes(searchTerm.toLowerCase())
+            )
+        )
+      : selectedCategory
+      ? allProducts.filter((item) => item.category === dbKey)
+      : [];
 
+  const isSearching = searchTerm.trim() !== '';
   const activeSlide = showcaseProducts[heroSliderIndex] || {};
-
+  useEffect(() => {
+    if (isSearching && displayedItems.length > 0 && resultsRef.current) {
+      resultsRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+    }
+  }, [searchTerm, displayedItems.length]);
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -337,6 +367,8 @@ export default function App() {
           <div className="flex items-center gap-3 w-full md:w-auto">
             <input
               type="text"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
               placeholder={t.searchPlaceholder}
               className="w-full md:w-72 px-4 py-2 rounded-full border border-orange-100 bg-[#fffaf9] outline-none focus:ring-2 focus:ring-orange-200/50"
             />
@@ -504,7 +536,7 @@ export default function App() {
 
       <section className="max-w-7xl mx-auto px-6 py-12 min-h-[500px]">
         <AnimatePresence mode="wait">
-          {!selectedCategory ? (
+          {!selectedCategory && !isSearching ? (
             <motion.div
               key="grid-layout"
               initial={{ opacity: 0, y: 15 }}
@@ -541,34 +573,41 @@ export default function App() {
               exit={{ opacity: 0, x: -30 }}
               className="space-y-8"
             >
-              <button
-                onClick={() => setSelectedCategory(null)}
-                className="px-5 py-2 text-xs font-semibold tracking-wide rounded-full border border-orange-100 text-stone-600 bg-white hover:bg-orange-50/50 transition"
-              >
-                {t.backBtn}
-              </button>
-              <div className="flex items-center gap-4 overflow-x-auto py-2 border-b border-orange-50">
-                {categoriesData[lang].map((cat) => (
-                  <button
-                    key={cat.categoryName}
-                    onClick={() => setSelectedCategory(cat.categoryName)}
-                    className={`w-24 h-24 rounded-full border text-lg flex items-center justify-center transition-all flex-shrink-0 relative overflow-hidden bg-[#fff9f6] ${
-                      selectedCategory === cat.categoryName
-                        ? 'border-[#d9779b] shadow-sm scale-95'
-                        : 'border-orange-100/70'
-                    }`}
-                    title={cat.categoryName}
-                  >
-                    {renderIcon(cat.icon, cat.categoryName)}
-                  </button>
-                ))}
-              </div>
+              {!isSearching && (
+                <button
+                  onClick={() => setSelectedCategory(null)}
+                  className="px-5 py-2 text-xs font-semibold tracking-wide rounded-full border border-orange-100 text-stone-600 bg-white hover:bg-orange-50/50 transition"
+                >
+                  {t.backBtn}
+                </button>
+              )}
+              {!isSearching && (
+                <div className="flex items-center gap-4 overflow-x-auto py-2 border-b border-orange-50">
+                  {categoriesData[lang].map((cat) => (
+                    <button
+                      key={cat.categoryName}
+                      onClick={() => setSelectedCategory(cat.categoryName)}
+                      className={`w-24 h-24 rounded-full border text-lg flex items-center justify-center transition-all flex-shrink-0 relative overflow-hidden bg-[#fff9f6] ${
+                        selectedCategory === cat.categoryName
+                          ? 'border-[#d9779b] shadow-sm scale-95'
+                          : 'border-orange-100/70'
+                      }`}
+                      title={cat.categoryName}
+                    >
+                      {renderIcon(cat.icon, cat.categoryName)}
+                    </button>
+                  ))}
+                </div>
+              )}
               <div>
                 <p className="text-xs font-bold text-[#d9779b] uppercase tracking-wider mb-4">
                   {t.allFilter}
                 </p>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              <div
+                ref={resultsRef}
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+              >
                 {displayedItems.map((item) => {
                   const formattedPrice =
                     item.price && String(item.price).includes('$')
