@@ -509,14 +509,14 @@ const displayedItems = selectedCategory
                       <div className="relative aspect-square w-full rounded-xl bg-[#fffaf9] overflow-hidden flex flex-col items-center justify-center border border-orange-50/30">
                         {item.image_url ? (
                           <img 
-                           src={`${bucketUrl}/products/${item.image_url.replace('/images/products/', '')}`}
+                           src={`${bucketUrl}${item.image_url.replace('/images/', '/')}`}
                            alt={item.name}
                            className="w-full h-full object-cover"
                            onError={(e) => {
                              e.target.onerror = null;
-                             e.target.src = 'https://via.placeholder.com/150';
-                          }}
-                        />
+                             e.target.src = 'https://via.placeholder.com/400?text=Image+Not+Found';
+                           }}
+                         />
                         ) : null}
                       
                       </div>
