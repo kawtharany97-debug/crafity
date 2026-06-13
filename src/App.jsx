@@ -122,11 +122,15 @@ const isSupabaseCategory = (catName) => {
   useEffect(() => {
   async function fetchProducts() {
     const { data, error } = await supabase.from('products').select('*');
-    if (error) console.error("Error loading products:", error);
-    else setMacrameProducts(data || []);
+    if (error) {
+      console.error("Supabase Error:", error);
+    } else {
+      console.log("Data fetched from Supabase:", data); // Check this in Browser Console
+      setAllProducts(data || []);
+    }
   }
   fetchProducts();
-  }, []);
+}, []);
   
   const changeSlide = (way) => {
     setSliderDirection(way);
