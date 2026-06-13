@@ -23,9 +23,6 @@ export default function App() {
   // 1. Unified state for all products
 const [allProducts, setAllProducts] = useState([]);
 
-  // 1. Unified state for all products
-const [allProducts, setAllProducts] = useState([]);
-
 // 3. Logic to determine what to show
 const isSupabaseCategory = (catName) => {
   // Map your display names to database category keys
@@ -128,13 +125,14 @@ const displayedItems = categoryKey
 
   // Automatic slide rotation loop
   useEffect(() => {
-    const timer = setInterval(() => {
-      setSliderDirection(1);
-      setHeroSliderIndex((prev) => (prev + 1) % showcaseProducts.length);
-    }, 5000); 
-    return () => clearInterval(timer);
+  async function fetchProducts() {
+    const { data, error } = await supabase.from('products').select('*');
+    if (error) console.error("Error loading products:", error);
+    else setMacrameProducts(data || []);
+  }
+  fetchProducts();
   }, []);
-
+  
   const changeSlide = (way) => {
     setSliderDirection(way);
     if (way === 1) {
@@ -284,10 +282,24 @@ const displayedItems = categoryKey
 
   const currentCategoryBlock = categoriesData[lang].find(cat => cat.categoryName === selectedCategory);
   
-  const isMacrameCategory = selectedCategory === "Macrame" || selectedCategory === "المكرامية";
-  const displayedItems = (isMacrameCategory && macrameProducts.length > 0) 
-    ? macrameProducts 
-    : currentCategoryBlock?.items || [];
+  // Mapping display names to database category keys
+const categoryMap = {
+  "Macrame": "macrame", "المكرامية": "macrame",
+  "Resin Art": "resin", "أعمال الريزن": "resin",
+  "Candles": "candles", "الشموع": "candles",
+  "Handmade Soap": "soap", "الصابون الطبيعي": "soap",
+  "Crochet": "crochet", "الكروشيه": "crochet",
+  "Gypsum": "gypsum", "كونكريت": "gypsum",
+  "Beads": "beads", "خرز": "beads",
+  "Giftbox": "giftbox", "حزمة الهدايا": "giftbox",
+  "Supplies": "supplies", "مواد أوّليّة": "supplies"
+};
+
+// Filter the products from Supabase
+const dbCategoryKey = categoryMap[selectedCategory];
+const displayedItems = selectedCategory 
+  ? allProducts.filter(item => item.category === dbKey) 
+  : [];
 
   const activeSlide = showcaseProducts[heroSliderIndex];
 
