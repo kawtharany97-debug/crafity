@@ -543,7 +543,7 @@ const displayedItems = selectedCategory
                       <div className="relative aspect-square w-full rounded-xl bg-[#fffaf9] overflow-hidden flex flex-col items-center justify-center border border-orange-50/30">
                         {item.image_url ? (
                           <img 
-                           src={`${bucketUrl}/${item.image_url.replace(/^\//, '')}`}
+                           src={`${bucketUrl}/products/${item.image_url.replace('/images/products/', '')}`}
                            alt={item.name}
                            className="w-full h-full object-cover"
                            onError={(e) => {
