@@ -310,7 +310,7 @@ const displayedItems = selectedCategory
 
       {/* Premium Fashion Split Slider Engine */}
       <AnimatePresence mode="wait">
-        {!selectedCategory && (
+        {activeSlide && (
           <section className="relative w-full overflow-hidden min-h-[560px] lg:min-h-[640px] flex items-center transition-colors duration-700">
             <AnimatePresence initial={false} custom={sliderDirection}>
               <motion.div
@@ -320,7 +320,7 @@ const displayedItems = selectedCategory
                 initial="enter"
                 animate="center"
                 exit="exit"
-                className={`absolute inset-0 bg-gradient-to-br ${activeSlide.bgTheme}`}
+                className={`absolute inset-0 bg-gradient-to-br ${activeSlide.bgTheme || 'from-orange-50 to-rose-50'}`}
               />
             </AnimatePresence>
 
