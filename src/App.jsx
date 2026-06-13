@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { supabase } from "./supabaseClient";
 
-const bucketUrl = "https://difogkabffvfdmwyykcc.supabase.co/storage/v1/object/public/products/";
+const bucketUrl = "https://difogkabffvfdmwyykcc.supabase.co/storage/v1/object/public/";
 
 export default function App() {
   const [lang, setLang] = useState("English");
