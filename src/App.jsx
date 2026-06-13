@@ -67,56 +67,22 @@ const isSupabaseCategory = (catName) => {
   });
    
   // Unified Premium Slider Source Dataset
-  const showcaseProducts = [
-    { 
-      id: "sc-1", 
-      badge: "BEST SELLER 🔥", 
-      badgeAr: "الأكثر مبيعاً 🔥",
-      name: "Boho Macrame Mirror", 
-      nameAr: "مرآة مكرامية بوهيمية",
-      price: "20,00 $", 
-      image: "macrame/macrame1.jpg",
-      bgTheme: "from-[#eae4e9] via-[#fffbfd] to-[#dfd7de]",
-      textColor: "text-[#8e7c8a]",
-      description: "Beautifully woven boho wall mirror with complex geometric macrame fringes."
-    },
-    { 
-      id: "sc-2", 
-      badge: "NEW ARRIVAL ✨", 
-      badgeAr: "وصلنا حديثاً ✨",
-      name: "Ocean Resin Coasters", 
-      nameAr: "طقم قواعد أكواب البحر",
-      price: "32,00 $", 
-      image: "resin/resin1.jpg",
-      bgTheme: "from-[#e0f2f1] via-[#ffffff] to-[#b2dfdb]",
-      textColor: "text-[#00796b]",
-      description: "Glossy epoxy resin coasters capturing a multi-tonal marine shoreline look."
-    },
-    { 
-      id: "sc-3", 
-      badge: "HOT ITEM ⚡", 
-      badgeAr: "مميز للغاية ⚡",
-      name: "Scented Soy Candle", 
-      nameAr: "شمعة الصويا المعطرة",
-      price: "18,00 $", 
-      image: "candles/candles1.jpg",
-      bgTheme: "from-[#fdf0ed] via-[#fffdfd] to-[#f8d7da]",
-      textColor: "text-[#b0525b]",
-      description: "Eco-friendly natural wax poured with rich therapeutic woodsy oil scents."
-    },
-    { 
-      id: "sc-4", 
-      badge: "TRENDING NOW 💖", 
-      badgeAr: "رائج الآن 💖",
-      name: "Macrame Shoulder Bag", 
-      nameAr: "حقيبة كتف مكرامية أنيقة",
-      price: "18,00 $", 
-      image: "macrame/macrame4.jpg",
-      bgTheme: "from-[#fcefe9] via-[#ffffff] to-[#f3dcd0]",
-      textColor: "text-[#c27854]",
-      description: "Sturdy, lightweight crossbody bag crafted from durable twisted cotton fibers."
-    }
-  ];
+  const getShowcaseItems = () => {
+    const labels = ['best-seller', 'new-arrival', 'hot-item', 'trending'];
+    return labels.map(label => {
+      const found = allProducts.find(p => p.label === label);
+      return {
+        id: found?.id || `fallback-${label}`,
+        badge: "BEST SELLER",
+        name: "Beads Collection",
+        price: "30.00 $",
+        image_url: `${bucketUrl}/products/beads/beads1.jpg`,
+        description: "Our most popular handcrafted beads."
+        };
+  });
+};
+
+const showcaseProducts = getShowcaseItems();
 
   // Automatic slide rotation loop
   useEffect(() => {
@@ -457,8 +423,8 @@ const displayedItems = selectedCategory
                         })}
                       >
                         <img 
-                          src={activeSlide.image} 
-                          alt={activeSlide.name} 
+                          src={activeSlide.image_url} 
+                          alt={activeSlide.name}
                           className="w-full h-full object-cover select-none transition duration-700 group-hover:scale-105"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/10 opacity-80" />
