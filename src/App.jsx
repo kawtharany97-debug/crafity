@@ -40,11 +40,6 @@ const isSupabaseCategory = (catName) => {
   return map[catName];
 };
 
-const categoryKey = isSupabaseCategory(selectedCategory);
-const displayedItems = categoryKey 
-  ? allProducts.filter(item => item.category === categoryKey)
-  : currentCategoryBlock?.items || [];
-
   // Categories data remains unchanged...
   const [categoriesData, setCategoriesData] = useState({
   English: [
