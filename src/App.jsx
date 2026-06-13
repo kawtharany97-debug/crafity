@@ -541,17 +541,16 @@ const displayedItems = selectedCategory
                   return (
                     <div key={item.id} className="group bg-white rounded-2xl p-4 border border-orange-50/70 shadow-sm flex flex-col justify-between relative">
                       <div className="relative aspect-square w-full rounded-xl bg-[#fffaf9] overflow-hidden flex flex-col items-center justify-center border border-orange-50/30">
-                        {item.image ? (
+                        {item.image_url ? (
                           <img 
-  src={`${bucketUrl}${item.image_url?.startsWith('/') ? item.image_url : '/' + item.image_url}`}
-  alt={item.name}
-  className="w-full h-full object-cover"
-  onError={(e) => {
-    console.log("Failed to load:", e.target.src);
-    e.target.onerror = null;
-    e.target.src = '/placeholder.png';
-  }}
-/>
+                           src={`${bucketUrl}${item.image_url.startsWith('/') ? item.image_url.substring(1) : item.image_url}`}
+                           alt={item.name}
+                           className="w-full h-full object-cover"
+                           onError={(e) => {
+                             e.target.onerror = null;
+                             e.target.src = '/placeholder.png';
+                          }}
+                        />
                         ) : null}
                         <div className={`${item.image ? 'hidden' : 'flex'} absolute inset-0 text-center text-stone-300 flex-col items-center justify-center p-4`}>
                           <span className="text-2xl block mb-1">📦</span>
