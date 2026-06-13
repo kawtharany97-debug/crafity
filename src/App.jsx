@@ -295,8 +295,8 @@ const categoryMap = {
   "Supplies": "supplies", "مواد أوّليّة": "supplies"
 };
 
-// Filter the products from Supabase
-const dbCategoryKey = categoryMap[selectedCategory];
+const dbKey = categoryMap[selectedCategory];
+
 const displayedItems = selectedCategory 
   ? allProducts.filter(item => item.category === dbKey) 
   : [];
