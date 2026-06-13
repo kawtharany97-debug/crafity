@@ -73,11 +73,13 @@ const isSupabaseCategory = (catName) => {
       const found = allProducts.find(p => p.label === label);
       return {
         id: found?.id || `fallback-${label}`,
-        badge: "BEST SELLER",
-        name: "Beads Collection",
-        price: "30.00 $",
-        image_url: `${bucketUrl}/products/beads/beads1.jpg`,
-        description: "Our most popular handcrafted beads."
+        badge: label.replace('-', ' ').toUpperCase(),
+        name: found?.name || "Coming Soon",
+        price: found?.price ? `${found.price} $` : "0.00 $",
+        image_url: found?.image_url 
+          ? `${bucketUrl}${found.image_url.replace('/images/', '/')}` 
+          : `${bucketUrl}/products/placeholder.jpg`,
+        description: found?.description || "Beautiful handcrafted item."
         };
   });
 };
