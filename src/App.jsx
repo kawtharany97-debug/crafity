@@ -536,14 +536,14 @@ const displayedItems = selectedCategory
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {displayedItems.map((item) => {
-                  const formattedPrice = item.price && item.price.includes('$') ? item.price : `${item.price || "0.00"} $`;
+                 const formattedPrice = item.price && String(item.price).includes('$') ? item.price : `${item.price || "0.00"} $`;
                   const isExpanded = !!expandedDetails[item.id];
                   return (
                     <div key={item.id} className="group bg-white rounded-2xl p-4 border border-orange-50/70 shadow-sm flex flex-col justify-between relative">
                       <div className="relative aspect-square w-full rounded-xl bg-[#fffaf9] overflow-hidden flex flex-col items-center justify-center border border-orange-50/30">
                         {item.image ? (
                           <img 
-  src={`${bucketUrl}${item.image.startsWith('/') ? item.image : '/' + item.image}`} 
+  src={`${bucketUrl}${item.image?.startsWith('/') ? item.image.substring(1) : item.image}`} 
   alt={item.name} 
   className="w-full h-full object-cover"
   onError={(e) => {
