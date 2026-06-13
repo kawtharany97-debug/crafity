@@ -627,14 +627,18 @@ const displayedItems = selectedCategory
               onClick={(e) => e.stopPropagation()}
             >
               <div className="aspect-square w-full rounded-2xl bg-stone-50 overflow-hidden relative border border-orange-50/40">
-                {quickViewItem.image ? (
-                  <img src={quickViewItem.image} alt={quickViewItem.name} className="w-full h-full object-cover" />
-                ) : (
-                  <div className="w-full h-full flex flex-col items-center justify-center text-stone-300">
-                    <span className="text-4xl mb-2">📦</span>
-                    <span className="text-xs font-semibold uppercase tracking-wider">No Image</span>
-                  </div>
-                )}
+                {quickViewItem.image_url ? (
+                 <img 
+                   src={`${bucketUrl}/products/${quickViewItem.image_url.replace('/images/products/', '')}`} 
+                   alt={quickViewItem.name} 
+                   className="w-full h-full object-cover" 
+                 />
+               ) : (
+                 <div className="w-full h-full flex flex-col items-center justify-center text-stone-300">
+                   <span className="text-4xl mb-2">📦</span>
+                   <span className="text-xs font-semibold uppercase tracking-wider">No Image</span>
+                 </div>
+               )}
               </div>
               <div className="space-y-1">
                 <span className="text-emerald-600 text-xs font-bold tracking-wider uppercase">
