@@ -265,7 +265,7 @@ const displayedItems = selectedCategory
   ? allProducts.filter(item => item.category === dbKey) 
   : [];
 
-  const activeSlide = showcaseProducts[heroSliderIndex];
+  const activeSlide = showcaseProducts[heroSliderIndex] || {};
 
   return (
     <motion.div
