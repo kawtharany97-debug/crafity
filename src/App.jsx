@@ -15,6 +15,17 @@ export default function App() {
   const [sliderDirection, setSliderDirection] = useState(1);
   const [searchTerm, setSearchTerm] = useState('');
   const resultsRef = useRef(null);
+  const [fullscreenImage, setFullscreenImage] = useState<string | null>(null);
+  const [showBackToTop, setShowBackToTop] = useState(false);
+
+  const getProductImage = (item) => {
+    const image = item?.image || item?.image_url || '';
+    if (!image) return '';
+
+    if (image.startsWith('http')) return image;
+
+    return `${bucketUrl}${image.replace('/images/', '/')}`;
+  };
 
   const toggleDetails = (itemId) => {
     setExpandedDetails((prev) => ({
@@ -59,22 +70,22 @@ export default function App() {
       { categoryName: 'Resin Art', icon: '/cat-resin.jpg' },
       { categoryName: 'Candles', icon: '/cat-candles.jpg' },
       { categoryName: 'Handmade Soap', icon: '/cat-soap.jpg' },
-      { categoryName: 'Tools & Supplies', icon: '/cat-supplies.jpg' },
-      { categoryName: 'Giftbox', icon: '/cat-giftbox.jpg' },
       { categoryName: 'Crochet', icon: '/cat-crochet.jpg' },
       { categoryName: 'Gypsum', icon: '/cat-gypsum.jpg' },
       { categoryName: 'Beads', icon: '/cat-beads.jpg' },
+      { categoryName: 'Giftbox', icon: '/cat-giftbox.jpg' },
+      { categoryName: 'Tools & Supplies', icon: '/cat-supplies.jpg' },
     ],
     Arabic: [
       { categoryName: 'المكرامية', icon: '/cat-macrame.jpg' },
       { categoryName: 'أعمال الريزن', icon: '/cat-resin.jpg' },
       { categoryName: 'الشموع', icon: '/cat-candles.jpg' },
       { categoryName: 'الصابون الطبيعي', icon: '/cat-soap.jpg' },
-      { categoryName: 'الأدوات والمستلزمات', icon: '/cat-supplies.jpg' },
-      { categoryName: 'الهدايا والتذكارات', icon: '/cat-giftbox.jpg' },
       { categoryName: 'الكروشيه', icon: '/cat-crochet.jpg' },
       { categoryName: 'كونكريت', icon: '/cat-gypsum.jpg' },
       { categoryName: 'خرز', icon: '/cat-beads.jpg' },
+      { categoryName: 'الهدايا والتذكارات', icon: '/cat-giftbox.jpg' },
+      { categoryName: 'الأدوات والمستلزمات', icon: '/cat-supplies.jpg' },
     ],
   });
 
@@ -87,27 +98,29 @@ export default function App() {
       if (error) {
         console.error('Supabase Error:', error);
       } else {
-        console.log('Data fetched from Supabase:', data);
         setAllProducts(data || []);
-        const labels = [
+        const showcaseLabels = [
           'best-seller',
           'new-arrival',
           'hot-item',
           'trending-item',
         ];
-        const items = labels.map((label) => {
-          const found = data.find((p) => p.label === label);
-          return {
-            id: found?.id || `fallback-${label}`,
-            badge: label.replace('-', ' ').toUpperCase(),
-            name: found?.name || 'Coming Soon',
-            price: found?.price ? `${found.price} $` : '0.00 $',
-            image_url: found?.image_url
-              ? `${bucketUrl}${found.image_url.replace('/images/', '/')}`
+
+        const items = (data || [])
+          .filter((product) => showcaseLabels.includes(product.label))
+          .map((product) => ({
+            id: product.id,
+            badge: product.label.replace(/-/g, ' ').toUpperCase(),
+            name: product.name,
+            name_ar: product.name_ar,
+            price: `${product.price} $`,
+            image_url: product.image_url
+              ? `${bucketUrl}${product.image_url.replace('/images/', '/')}`
               : `${bucketUrl}/products/placeholder.jpg`,
-            description: found?.description || 'Beautiful handcrafted item.',
-          };
-        });
+            description: product.description || 'Beautiful handcrafted item.',
+            description_ar: product.description_ar || '',
+          }));
+        console.log(items);
         setShowcaseProducts(items);
       }
     }
@@ -266,13 +279,13 @@ export default function App() {
     if (lang === 'Arabic') {
       message =
         `مرحباً كرافيتي! أود طلب المنتج التالي:\n\n` +
-        `📦 *المنتج:* ${item.nameAr || item.name}\n` +
+        `📦 *المنتج:* ${item.name_ar || item.name}\n` +
         `💰 *السعر:* ${item.price}\n` +
         `🔗 *الحالة:* طلب مباشرة من واجهة العرض الرئيسية المتحركة`;
     } else {
       message =
         `Hello Crafity! I would like to order this item:\n\n` +
-        `📦 *Product:* ${item.name}\n` +
+        `📦 *Product:* ${lang === 'Arabic' ? item.name_ar : item.name}\n` +
         `💰 *Price:* ${item.price}\n` +
         `🔗 *Context:* Requested from interactive premium dynamic hero slider`;
     }
@@ -315,9 +328,9 @@ export default function App() {
       ? allProducts.filter((item) =>
           [
             item.name,
-            item.nameAr,
+            item.name_ar,
             item.description,
-            item.descriptionAr,
+            item.description_ar,
             item.category,
           ]
             .filter(Boolean)
@@ -331,6 +344,25 @@ export default function App() {
 
   const isSearching = searchTerm.trim() !== '';
   const activeSlide = showcaseProducts[heroSliderIndex] || {};
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowBackToTop(window.scrollY > 500);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
   useEffect(() => {
     if (isSearching && displayedItems.length > 0 && resultsRef.current) {
       resultsRef.current.scrollIntoView({
@@ -421,14 +453,16 @@ export default function App() {
                     </span>
                     <h2 className="text-4xl md:text-5xl lg:text-6xl font-light leading-[1.1] text-[#4b3d39] tracking-tight">
                       {lang === 'Arabic'
-                        ? activeSlide.nameAr
+                        ? activeSlide.name_ar
                         : activeSlide.name}
                     </h2>
                     <p className="text-2xl font-serif italic text-[#d9779b] font-medium">
                       {activeSlide.price}
                     </p>
                     <p className="text-sm md:text-base text-stone-600/90 leading-relaxed max-w-md">
-                      {activeSlide.description}
+                      {lang === 'Arabic'
+                        ? activeSlide.description_ar
+                        : activeSlide.description}
                     </p>
                   </motion.div>
                 </AnimatePresence>
@@ -441,19 +475,20 @@ export default function App() {
                     {t.orderWhatsapp}
                   </button>
                   <button
-                    onClick={() =>
+                    onClick={() => {
                       setQuickViewItem({
                         id: activeSlide.id,
                         name:
                           lang === 'Arabic'
-                            ? activeSlide.nameAr
+                            ? activeSlide.name_ar
                             : activeSlide.name,
-                        price: activeSlide.price,
-                        image: activeSlide.image,
+                        price: activeSlide.price.replace('$', ''),
+                        image: activeSlide.image_url,
+                        image_url: activeSlide.image_url,
                         inStock: true,
                         description: activeSlide.description,
-                      })
-                    }
+                      });
+                    }}
                     className="px-6 py-3.5 rounded-full bg-white/80 backdrop-blur-md border border-stone-200/60 text-stone-700 font-medium text-sm transition hover:bg-white"
                   >
                     {t.quickView}
@@ -509,17 +544,21 @@ export default function App() {
                             id: activeSlide.id,
                             name:
                               lang === 'Arabic'
-                                ? activeSlide.nameAr
+                                ? activeSlide.name_ar
                                 : activeSlide.name,
-                            price: activeSlide.price,
-                            image: activeSlide.image,
+                            price: activeSlide.price.replace('$', ''),
+                            image: activeSlide.image_url,
+                            image_url: activeSlide.image_url,
                             inStock: true,
-                            description: activeSlide.description,
+                            description:
+                              lang === 'Arabic'
+                                ? activeSlide.description_ar
+                                : activeSlide.description,
                           })
                         }
                       >
                         <img
-                          src={activeSlide.image_url}
+                          src={getProductImage(activeSlide)}
                           alt={activeSlide.name}
                           className="w-full h-full object-cover select-none transition duration-700 group-hover:scale-105"
                         />
@@ -622,16 +661,21 @@ export default function App() {
                       <div className="relative aspect-square w-full rounded-xl bg-[#fffaf9] overflow-hidden flex flex-col items-center justify-center border border-orange-50/30">
                         {item.image_url ? (
                           <img
-                            src={`${bucketUrl}${item.image_url.replace(
-                              '/images/',
-                              '/'
-                            )}`}
+                            src={getProductImage(item)}
                             alt={item.name}
                             className="w-full h-full object-cover"
                             onError={(e) => {
                               e.target.onerror = null;
                               e.target.src =
                                 'https://via.placeholder.com/400?text=Image+Not+Found';
+                            }}
+                            onClick={(e) => {
+                              e.stopPropagation();
+
+                              const image = getProductImage(item);
+                              console.log('IMAGE CLICKED:', image);
+
+                              setFullscreenImage(image);
                             }}
                           />
                         ) : null}
@@ -641,7 +685,7 @@ export default function App() {
                           {formattedPrice}
                         </div>
                         <div className="text-xs text-stone-500 font-medium">
-                          {item.name}
+                          {lang === 'Arabic' ? item.name_ar : item.name}
                         </div>
                       </div>
                       <AnimatePresence>
@@ -653,10 +697,11 @@ export default function App() {
                             className="overflow-hidden mt-2 bg-orange-50/30 rounded-xl p-2 border border-orange-100/50"
                           >
                             <p className="text-[11px] leading-relaxed text-stone-600 font-normal">
-                              {item.description ||
-                                (lang === 'Arabic'
-                                  ? 'صنع يدويا بكل حب وعناية فائقة بالتفاصيل.'
-                                  : 'Crafted delicately by hand with supreme attention to detail.')}
+                              {lang === 'Arabic'
+                                ? item.description_ar ||
+                                  'صنع يدويا بكل حب وعناية فائقة بالتفاصيل.'
+                                : item.description ||
+                                  'Crafted delicately by hand with supreme attention to detail.'}
                             </p>
                           </motion.div>
                         )}
@@ -672,7 +717,21 @@ export default function App() {
                       <div className="flex justify-between items-center pt-3 mt-2 border-t border-orange-50/50 text-[10px]">
                         <div className="flex items-center gap-2">
                           <span
-                            onClick={() => setQuickViewItem(item)}
+                            onClick={() =>
+                              setQuickViewItem({
+                                id: item.id,
+                                name:
+                                  lang === 'Arabic' ? item.name_ar : item.name,
+                                price: item.price,
+                                image: item.image_url,
+                                image_url: item.image_url,
+                                inStock: true,
+                                description:
+                                  lang === 'Arabic'
+                                    ? item.description_ar
+                                    : item.description,
+                              })
+                            }
                             className="text-stone-400 hover:text-[#d9779b] font-medium cursor-pointer uppercase tracking-wider"
                           >
                             {t.quickView}
@@ -689,12 +748,8 @@ export default function App() {
                             {t.detailsView}
                           </span>
                         </div>
-                        <span
-                          className={`font-bold ${
-                            item.inStock ? 'text-emerald-600' : 'text-stone-400'
-                          }`}
-                        >
-                          {item.inStock ? t.inStock : t.soldOut}
+                        <span className={`font-bold ${'text-emerald-600'}`}>
+                          {t.inStock}
                         </span>
                       </div>
                     </div>
@@ -726,12 +781,12 @@ export default function App() {
               <div className="aspect-square w-full rounded-2xl bg-stone-50 overflow-hidden relative border border-orange-50/40">
                 {quickViewItem.image_url ? (
                   <img
-                    src={`${bucketUrl}/products/${quickViewItem.image_url.replace(
-                      '/images/products/',
-                      ''
-                    )}`}
+                    src={getProductImage(quickViewItem)}
                     alt={quickViewItem.name}
                     className="w-full h-full object-cover"
+                    onClick={() =>
+                      setFullscreenImage(getProductImage(quickViewItem))
+                    }
                   />
                 ) : (
                   <div className="w-full h-full flex flex-col items-center justify-center text-stone-300">
@@ -744,13 +799,13 @@ export default function App() {
               </div>
               <div className="space-y-1">
                 <span className="text-emerald-600 text-xs font-bold tracking-wider uppercase">
-                  {quickViewItem.inStock ? t.inStock : t.soldOut}
+                  {t.inStock}
                 </span>
                 <h4 className="text-xl font-medium text-[#4b3d39]">
                   {quickViewItem.name}
                 </h4>
                 <p className="text-lg font-bold text-[#d9779b]">
-                  {quickViewItem.price}
+                  {`${quickViewItem.price} $`}
                 </p>
                 <p className="text-xs text-stone-500 pt-1 leading-relaxed">
                   {quickViewItem.description ||
@@ -823,17 +878,6 @@ export default function App() {
                 </svg>
               </a>
               <a
-                href="https://www.pinterest.com/venerash447/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:scale-110 transition duration-300"
-                title="Pinterest"
-              >
-                <svg className="w-7 h-7" viewBox="0 0 24 24" fill="#E60023">
-                  <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.162-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.966 1.406-5.966s-.359-.72-.359-1.781c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.204 0 1.031.397 2.138.893 2.738a.36.36 0 01.083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.631-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12.017 24c6.62 0 11.988-5.367 11.988-11.987C24.005 5.367 18.636 0 12.017 0z" />
-                </svg>
-              </a>
-              <a
                 href="https://tiktok.com/@crafity.lb"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -866,6 +910,46 @@ export default function App() {
           {t.copyright}
         </div>
       </footer>
+
+      {fullscreenImage && (
+        <div
+          className="fixed inset-0 z-[99999] bg-black/95 flex items-center justify-center p-4"
+          onClick={() => setFullscreenImage(null)}
+        >
+          <button
+            className="absolute top-5 right-6 text-white text-4xl z-[100000]"
+            onClick={(e) => {
+              e.stopPropagation();
+              setFullscreenImage(null);
+            }}
+          >
+            ×
+          </button>
+
+          <img
+            src={fullscreenImage}
+            alt="Full screen"
+            className="max-w-[95vw] max-h-[95vh] object-contain"
+            onClick={(e) => e.stopPropagation()}
+            onError={() =>
+              console.log('FULLSCREEN IMAGE FAILED:', fullscreenImage)
+            }
+            onLoad={() =>
+              console.log('FULLSCREEN IMAGE LOADED:', fullscreenImage)
+            }
+          />
+        </div>
+      )}
+      {selectedCategory && showBackToTop && (
+        <div className="fixed bottom-8 left-1/2 -translate-x-1/2 w-full max-w-7xl px-6 z-50 flex justify-end">
+          <button
+            onClick={scrollToTop}
+            className="w-16 h-16 rounded-full bg-[#fff9f6] border border-[#d9779b]/30 shadow-lg flex items-center justify-center hover:scale-105 transition"
+          >
+            <span className="text-[#d9779b] text-2xl">↑</span>
+          </button>
+        </div>
+      )}
     </motion.div>
   );
 }
