@@ -15,7 +15,7 @@ export default function App() {
   const [sliderDirection, setSliderDirection] = useState(1);
   const [searchTerm, setSearchTerm] = useState('');
   const resultsRef = useRef(null);
-  const [fullscreenImage, setFullscreenImage] = useState<string | null>(null);
+  const [fullscreenImage, setFullscreenImage] = useState(null);
   const [showBackToTop, setShowBackToTop] = useState(false);
 
   const getProductImage = (item) => {
@@ -913,7 +913,7 @@ export default function App() {
 
       {fullscreenImage && (
         <div
-          className="fixed inset-0 z-[99999] bg-black/95 flex items-center justify-center p-4"
+          className="fixed inset-0 z-[99999] bg-black/95 flex items-center justify-center"
           onClick={() => setFullscreenImage(null)}
         >
           <button
