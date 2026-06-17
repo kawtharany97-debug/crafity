@@ -27,6 +27,15 @@ export default function App() {
     return `${bucketUrl}${image.replace('/images/', '/')}`;
   };
 
+  const getProductVideo = (item) => {
+    const image = item?.video;
+    if (!image) return '';
+
+    if (image.startsWith('http')) return image;
+
+    return `${bucketUrl}${image.replace('/images/', '/')}`;
+  };
+
   const toggleDetails = (itemId) => {
     setExpandedDetails((prev) => ({
       ...prev,
@@ -91,6 +100,11 @@ export default function App() {
 
   const [showcaseProducts, setShowcaseProducts] = useState([]);
 
+  const isVideo = (url) => {
+    if (!url) return false;
+
+    return /\.(mp4|webm|ogg|mov)$/i.test(url);
+  };
   // Automatic slide rotation loop
   useEffect(() => {
     async function fetchProducts() {
@@ -114,6 +128,7 @@ export default function App() {
               : `${bucketUrl}/products/placeholder.jpg`,
             description: product.description || 'Beautiful handcrafted item.',
             description_ar: product.description_ar || '',
+            video: product.video,
           }));
         console.log(items);
         setShowcaseProducts(items);
@@ -445,7 +460,7 @@ export default function App() {
                     exit="exit"
                     className="space-y-4"
                   >
-                    <h2 className="text-3xl md:text-3xl lg:text-3xl font-light leading-[1.1] text-[#4b3d39] tracking-tight">
+                    <h2 className="text-2xl md:text-2xl lg:text-2xl font-light leading-[1.1] text-[#4b3d39] tracking-tight">
                       {lang === 'Arabic'
                         ? activeSlide.name_ar
                         : activeSlide.name}
@@ -460,34 +475,6 @@ export default function App() {
                     </p>
                   </motion.div>
                 </AnimatePresence>
-
-                <div className="pt-4 flex flex-wrap items-center justify-center lg:justify-start gap-4">
-                  <button
-                    onClick={() => sendOrderToWhatsApp(activeSlide)}
-                    className="px-8 py-3.5 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white font-medium text-sm transition shadow-[0_10px_25px_rgba(16,185,129,0.25)] hover:scale-[1.02] active:scale-[0.98]"
-                  >
-                    {t.orderWhatsapp}
-                  </button>
-                  <button
-                    onClick={() => {
-                      setQuickViewItem({
-                        id: activeSlide.id,
-                        name:
-                          lang === 'Arabic'
-                            ? activeSlide.name_ar
-                            : activeSlide.name,
-                        price: activeSlide.price.replace('$', ''),
-                        image: activeSlide.image_url,
-                        image_url: activeSlide.image_url,
-                        inStock: true,
-                        description: activeSlide.description,
-                      });
-                    }}
-                    className="px-6 py-3.5 rounded-full bg-white/80 backdrop-blur-md border border-stone-200/60 text-stone-700 font-medium text-sm transition hover:bg-white"
-                  >
-                    {t.quickView}
-                  </button>
-                </div>
 
                 <div className="pt-6 flex items-center justify-center lg:justify-start gap-3">
                   <button
@@ -560,11 +547,23 @@ export default function App() {
                             })
                           }
                         >
-                          <img
-                            src={getProductImage(activeSlide)}
-                            alt={activeSlide.name}
-                            className="w-full h-full object-cover select-none transition duration-700 group-hover:scale-105"
-                          />
+                          {activeSlide?.video ? (
+                            <video
+                              src={getProductVideo(activeSlide)}
+                              className="w-full h-full object-cover"
+                              autoPlay
+                              muted
+                              loop
+                              playsInline
+                              preload="auto"
+                            />
+                          ) : (
+                            <img
+                              src={getProductImage(activeSlide)}
+                              alt={activeSlide.name}
+                              className="w-full h-full object-cover select-none transition duration-700 group-hover:scale-105"
+                            />
+                          )}
                           <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/10 opacity-80" />
                         </motion.div>
                       </AnimatePresence>
@@ -930,18 +929,20 @@ export default function App() {
             ×
           </button>
 
-          <img
-            src={fullscreenImage}
-            alt="Full screen"
-            className="max-w-[95vw] max-h-[95vh] object-contain"
-            onClick={(e) => e.stopPropagation()}
-            onError={() =>
-              console.log('FULLSCREEN IMAGE FAILED:', fullscreenImage)
-            }
-            onLoad={() =>
-              console.log('FULLSCREEN IMAGE LOADED:', fullscreenImage)
-            }
-          />
+          {isVideo(fullscreenImage) ? (
+            <video
+              src={fullscreenImage}
+              controls
+              autoPlay
+              className="max-w-full max-h-full"
+            />
+          ) : (
+            <img
+              src={fullscreenImage}
+              alt=""
+              className="max-w-full max-h-full object-contain"
+            />
+          )}
         </div>
       )}
       {selectedCategory && showBackToTop && (
