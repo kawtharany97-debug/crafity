@@ -99,12 +99,7 @@ export default function App() {
         console.error('Supabase Error:', error);
       } else {
         setAllProducts(data || []);
-        const showcaseLabels = [
-          'best-seller',
-          'new-arrival',
-          'hot-item',
-          'trending-item',
-        ];
+        const showcaseLabels = ['trending-item'];
 
         const items = (data || [])
           .filter((product) => showcaseLabels.includes(product.label))
@@ -436,7 +431,11 @@ export default function App() {
             </AnimatePresence>
 
             <div className="relative max-w-7xl mx-auto w-full px-6 py-12 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center z-10">
-              <div className="lg:col-span-5 space-y-6 lg:pr-8">
+              <div
+                className={`lg:col-span-5 order-2 lg:order-1 text-center ${
+                  lang === 'Arabic' ? 'lg:text-right' : 'lg:text-left'
+                }`}
+              >
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={`info-${heroSliderIndex}`}
@@ -446,28 +445,23 @@ export default function App() {
                     exit="exit"
                     className="space-y-4"
                   >
-                    <span className="inline-block px-4 py-1.5 rounded-full bg-white/90 backdrop-blur-md shadow-sm border border-white/50 text-[#d9779b] text-xs font-bold tracking-widest uppercase">
-                      {lang === 'Arabic'
-                        ? activeSlide.badgeAr
-                        : activeSlide.badge}
-                    </span>
-                    <h2 className="text-4xl md:text-5xl lg:text-6xl font-light leading-[1.1] text-[#4b3d39] tracking-tight">
+                    <h2 className="text-3xl md:text-3xl lg:text-3xl font-light leading-[1.1] text-[#4b3d39] tracking-tight">
                       {lang === 'Arabic'
                         ? activeSlide.name_ar
                         : activeSlide.name}
                     </h2>
-                    <p className="text-2xl font-serif italic text-[#d9779b] font-medium">
+
+                    <p
+                      className={`text-center ${
+                        lang === 'Arabic' ? 'lg:text-right' : 'lg:text-left'
+                      } text-2xl font-serif italic text-[#d9779b] font-medium`}
+                    >
                       {activeSlide.price}
-                    </p>
-                    <p className="text-sm md:text-base text-stone-600/90 leading-relaxed max-w-md">
-                      {lang === 'Arabic'
-                        ? activeSlide.description_ar
-                        : activeSlide.description}
                     </p>
                   </motion.div>
                 </AnimatePresence>
 
-                <div className="pt-4 flex flex-wrap items-center gap-4">
+                <div className="pt-4 flex flex-wrap items-center justify-center lg:justify-start gap-4">
                   <button
                     onClick={() => sendOrderToWhatsApp(activeSlide)}
                     className="px-8 py-3.5 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white font-medium text-sm transition shadow-[0_10px_25px_rgba(16,185,129,0.25)] hover:scale-[1.02] active:scale-[0.98]"
@@ -495,16 +489,16 @@ export default function App() {
                   </button>
                 </div>
 
-                <div className="pt-6 flex items-center gap-3">
+                <div className="pt-6 flex items-center justify-center lg:justify-start gap-3">
                   <button
                     onClick={() => changeSlide(-1)}
-                    className="w-11 h-11 rounded-full bg-white/90 shadow-sm border border-stone-100 flex items-center justify-center text-stone-700 hover:bg-[#d9779b] hover:text-white transition active:scale-95"
+                    className="w-11 h-11 rounded-full bg-white/90 shadow-sm border border-stone-100 flex items-center justify-center lg:justify-start text-stone-700 hover:bg-[#d9779b] hover:text-white transition active:scale-95"
                   >
                     ←
                   </button>
                   <button
                     onClick={() => changeSlide(1)}
-                    className="w-11 h-11 rounded-full bg-white/90 shadow-sm border border-stone-100 flex items-center justify-center text-stone-700 hover:bg-[#d9779b] hover:text-white transition active:scale-95"
+                    className="w-11 h-11 rounded-full bg-white/90 shadow-sm border border-stone-100 flex items-center justify-center lg:justify-start text-stone-700 hover:bg-[#d9779b] hover:text-white transition active:scale-95"
                   >
                     →
                   </button>
@@ -527,44 +521,54 @@ export default function App() {
                 </div>
               </div>
 
-              <div className="lg:col-span-7 flex justify-center lg:justify-end relative h-[420px] lg:h-[500px] w-full">
+              <div className="lg:col-span-7 order-1 lg:order-2 flex justify-center lg:justify-end relative h-[420px] lg:h-[500px] w-full">
                 <div className="relative w-full max-w-[440px] h-full rounded-[36px] p-2 bg-white/30 backdrop-blur-md shadow-[0_30px_70px_rgba(0,0,0,0.06)] border border-white/40">
-                  <div className="relative w-full h-full rounded-[28px] overflow-hidden group">
-                    <AnimatePresence initial={false} custom={sliderDirection}>
-                      <motion.div
-                        key={`frame-${heroSliderIndex}`}
-                        custom={sliderDirection}
-                        variants={mainFrameVariants}
-                        initial="enter"
-                        animate="center"
-                        exit="exit"
-                        className="absolute inset-0 w-full h-full cursor-zoom-in"
-                        onClick={() =>
-                          setQuickViewItem({
-                            id: activeSlide.id,
-                            name:
-                              lang === 'Arabic'
-                                ? activeSlide.name_ar
-                                : activeSlide.name,
-                            price: activeSlide.price.replace('$', ''),
-                            image: activeSlide.image_url,
-                            image_url: activeSlide.image_url,
-                            inStock: true,
-                            description:
-                              lang === 'Arabic'
-                                ? activeSlide.description_ar
-                                : activeSlide.description,
-                          })
-                        }
-                      >
-                        <img
-                          src={getProductImage(activeSlide)}
-                          alt={activeSlide.name}
-                          className="w-full h-full object-cover select-none transition duration-700 group-hover:scale-105"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/10 opacity-80" />
-                      </motion.div>
-                    </AnimatePresence>
+                  <div className="relative w-full h-full rounded-[28px] group">
+                    <div className="absolute -top-12 left-0 z-30">
+                      <span className="inline-block px-4 py-1.5 rounded-full bg-white/90 backdrop-blur-md shadow-sm border border-white/50 text-[#d9779b] text-xs font-bold tracking-widest uppercase">
+                        {lang === 'Arabic'
+                          ? activeSlide.badgeAr
+                          : activeSlide.badge}
+                      </span>
+                    </div>
+
+                    <div className="relative w-full h-full rounded-[28px] overflow-hidden group">
+                      <AnimatePresence initial={false} custom={sliderDirection}>
+                        <motion.div
+                          key={`frame-${heroSliderIndex}`}
+                          custom={sliderDirection}
+                          variants={mainFrameVariants}
+                          initial="enter"
+                          animate="center"
+                          exit="exit"
+                          className="absolute inset-0 w-full h-full cursor-zoom-in"
+                          onClick={() =>
+                            setQuickViewItem({
+                              id: activeSlide.id,
+                              name:
+                                lang === 'Arabic'
+                                  ? activeSlide.name_ar
+                                  : activeSlide.name,
+                              price: activeSlide.price.replace('$', ''),
+                              image: activeSlide.image_url,
+                              image_url: activeSlide.image_url,
+                              inStock: true,
+                              description:
+                                lang === 'Arabic'
+                                  ? activeSlide.description_ar
+                                  : activeSlide.description,
+                            })
+                          }
+                        >
+                          <img
+                            src={getProductImage(activeSlide)}
+                            alt={activeSlide.name}
+                            className="w-full h-full object-cover select-none transition duration-700 group-hover:scale-105"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/10 opacity-80" />
+                        </motion.div>
+                      </AnimatePresence>
+                    </div>
                   </div>
                 </div>
               </div>
