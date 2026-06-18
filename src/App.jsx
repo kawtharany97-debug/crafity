@@ -195,6 +195,8 @@ export default function App() {
       copyright: '©️ 2026 Crafity — Made With Love',
       orderWhatsapp: 'Order via WhatsApp 💬',
       close: 'Close',
+      bestSellers: 'Best Sellers',
+      newArrivals: 'New Arrivals',
     },
     Arabic: {
       dir: 'rtl',
@@ -228,6 +230,8 @@ export default function App() {
       copyright: '©️ ٢٠٢٦ كرافيتي — صنع بكل حب',
       orderWhatsapp: 'اطلب عبر واتساب 💬',
       close: 'إغلاق',
+      bestSellers: 'الأكثر مبيعًا',
+      newArrivals: 'وصل حديثًا',
     },
   };
 
@@ -651,6 +655,81 @@ export default function App() {
                   </div>
                 ))}
               </div>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 pt-6">
+                {/* Best Sellers Section */}
+                <div className="w-full lg:ml-0 rounded-[2rem] border border-[#ead8d0] bg-white/65 p-5 shadow-sm">
+                  <div className="mb-5">
+                    <span className="inline-flex rounded-full bg-white/90 px-4 py-2 text-[11px] font-bold uppercase tracking-[0.22em] text-[#d9779b] shadow-sm border border-[#f1ded8]">
+                      {t.bestSellers}
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-2 gap-4">
+                    {bestSellerProducts.map((product) => (
+                      <div
+                        key={product.id}
+                        className="group relative overflow-hidden rounded-[2rem] bg-stone-100 shadow-sm border border-stone-100"
+                      >
+                        <div className="relative aspect-[4/5] overflow-hidden rounded-[2rem]">
+                          <img
+                            src={getProductImage(product)}
+                            alt={product.name}
+                            className="w-full h-full object-cover select-none transition duration-700 group-hover:scale-105"
+                          />
+
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/10 opacity-80" />
+
+                          <div className="absolute bottom-4 left-4 right-4">
+                            <h4 className="text-white font-semibold text-sm line-clamp-1">
+                              {product.name}
+                            </h4>
+                            <p className="text-white/90 text-sm mt-1">
+                              {product.price} $
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* New Arrivals Section */}
+                <div className="w-full lg:ml-0 rounded-[2rem] border border-[#ead8d0] bg-white/65 p-5 shadow-sm">
+                  <div className="mb-5">
+                    <span className="inline-flex rounded-full bg-white/90 px-4 py-2 text-[11px] font-bold uppercase tracking-[0.22em] text-[#d9779b] shadow-sm border border-[#f1ded8]">
+                      {t.newArrivals}
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-2 gap-4">
+                    {newArrivalProducts.map((product) => (
+                      <div
+                        key={product.id}
+                        className="group relative overflow-hidden rounded-[2rem] bg-stone-100 shadow-sm border border-stone-100"
+                      >
+                        <div className="relative aspect-[4/5] overflow-hidden rounded-[2rem]">
+                          <img
+                            src={getProductImage(product)}
+                            alt={product.name}
+                            className="w-full h-full object-cover select-none transition duration-700 group-hover:scale-105"
+                          />
+
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/10 opacity-80" />
+
+                          <div className="absolute bottom-4 left-4 right-4">
+                            <h4 className="text-white font-semibold text-sm line-clamp-1">
+                              {product.name}
+                            </h4>
+                            <p className="text-white/90 text-sm mt-1">
+                              {product.price} $
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
             </motion.div>
           ) : (
             <motion.div
@@ -883,83 +962,6 @@ export default function App() {
           </motion.div>
         )}
       </AnimatePresence>
-      <div className="px-3 sm:px-4 lg:px-6 pt-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Best Sellers Section */}
-          <div className="w-full lg:ml-0 rounded-[2rem] border border-[#ead8d0] bg-white/65 p-5 shadow-sm">
-            <div className="mb-5">
-              <span className="inline-flex rounded-full bg-white/90 px-4 py-2 text-[11px] font-bold uppercase tracking-[0.22em] text-[#d9779b] shadow-sm border border-[#f1ded8]">
-                Best Sellers
-              </span>
-            </div>
-
-            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-2 gap-4">
-              {bestSellerProducts.map((product) => (
-                <div
-                  key={product.id}
-                  className="group relative overflow-hidden rounded-[2rem] bg-stone-100 shadow-sm border border-stone-100"
-                >
-                  <div className="relative aspect-[4/5] overflow-hidden rounded-[2rem]">
-                    <img
-                      src={getProductImage(product)}
-                      alt={product.name}
-                      className="w-full h-full object-cover select-none transition duration-700 group-hover:scale-105"
-                    />
-
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/10 opacity-80" />
-
-                    <div className="absolute bottom-4 left-4 right-4">
-                      <h4 className="text-white font-semibold text-sm line-clamp-1">
-                        {product.name}
-                      </h4>
-                      <p className="text-white/90 text-sm mt-1">
-                        {product.price} $
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* New Arrivals Section */}
-          <div className="w-full lg:ml-0 rounded-[2rem] border border-[#ead8d0] bg-white/65 p-5 shadow-sm">
-            <div className="mb-5">
-              <span className="inline-flex rounded-full bg-white/90 px-4 py-2 text-[11px] font-bold uppercase tracking-[0.22em] text-[#d9779b] shadow-sm border border-[#f1ded8]">
-                New Arrivals
-              </span>
-            </div>
-
-            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-2 gap-4">
-              {newArrivalProducts.map((product) => (
-                <div
-                  key={product.id}
-                  className="group relative overflow-hidden rounded-[2rem] bg-stone-100 shadow-sm border border-stone-100"
-                >
-                  <div className="relative aspect-[4/5] overflow-hidden rounded-[2rem]">
-                    <img
-                      src={getProductImage(product)}
-                      alt={product.name}
-                      className="w-full h-full object-cover select-none transition duration-700 group-hover:scale-105"
-                    />
-
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/10 opacity-80" />
-
-                    <div className="absolute bottom-4 left-4 right-4">
-                      <h4 className="text-white font-semibold text-sm line-clamp-1">
-                        {product.name}
-                      </h4>
-                      <p className="text-white/90 text-sm mt-1">
-                        {product.price} $
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
       <section className="bg-gradient-to-r from-orange-50/30 to-rose-50/20 py-10 border-t border-b border-orange-50/60 text-center px-6">
         <p className="text-sm md:text-base font-light tracking-wide text-stone-600">
           {t.custNotification}
