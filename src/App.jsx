@@ -381,6 +381,21 @@ export default function App() {
       });
     }
   }, [searchTerm, displayedItems.length]);
+
+  const bestSellerProducts = allProducts
+    .filter(
+      (product) =>
+        product.label === 'best-seller' || product.label === 'best-sellers'
+    )
+    .slice(0, 4);
+
+  const newArrivalProducts = allProducts
+    .filter(
+      (product) =>
+        product.label === 'new-arrival' || product.label === 'new-arrivals'
+    )
+    .slice(0, 4);
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -479,16 +494,46 @@ export default function App() {
                 <div className="pt-6 flex items-center justify-center lg:justify-start gap-3">
                   <button
                     onClick={() => changeSlide(-1)}
-                    className="w-11 h-11 rounded-full bg-white/90 shadow-sm border border-stone-100 flex items-center justify-center lg:justify-start text-stone-700 hover:bg-[#d9779b] hover:text-white transition active:scale-95"
+                    className="w-11 h-11 rounded-full bg-white/90 shadow-sm border border-stone-100 flex items-center justify-center text-stone-700 hover:bg-[#d9779b] hover:text-white transition active:scale-95"
                   >
-                    ←
+                    <svg
+                      className="w-5 h-5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={2}
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d={
+                          lang === 'Arabic' ? 'M9 5l7 7-7 7' : 'M15 19l-7-7 7-7'
+                        }
+                      />
+                    </svg>
                   </button>
+
                   <button
                     onClick={() => changeSlide(1)}
-                    className="w-11 h-11 rounded-full bg-white/90 shadow-sm border border-stone-100 flex items-center justify-center lg:justify-start text-stone-700 hover:bg-[#d9779b] hover:text-white transition active:scale-95"
+                    className="w-11 h-11 rounded-full bg-white/90 shadow-sm border border-stone-100 flex items-center justify-center text-stone-700 hover:bg-[#d9779b] hover:text-white transition active:scale-95"
                   >
-                    →
+                    <svg
+                      className="w-5 h-5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={2}
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d={
+                          lang === 'Arabic' ? 'M15 19l-7-7 7-7' : 'M9 5l7 7-7 7'
+                        }
+                      />
+                    </svg>
                   </button>
+
                   <div className="ml-4 flex gap-1.5">
                     {showcaseProducts.map((_, idx) => (
                       <span
@@ -576,7 +621,7 @@ export default function App() {
         )}
       </AnimatePresence>
 
-      <section className="max-w-7xl mx-auto px-6 py-12 min-h-[500px]">
+      <section className="max-w-7xl mx-auto px-6 pt-0 pb-2 min-h-[500px]">
         <AnimatePresence mode="wait">
           {!selectedCategory && !isSearching ? (
             <motion.div
@@ -584,9 +629,9 @@ export default function App() {
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -15 }}
-              className="space-y-8"
+              className="space-y-8 -mt-6"
             >
-              <div>
+              <div className="-mt-8">
                 <h3 className="text-2xl font-semibold tracking-tight text-[#4b3d39]">
                   {t.catTitle}
                 </h3>
@@ -838,7 +883,83 @@ export default function App() {
           </motion.div>
         )}
       </AnimatePresence>
+      <div className="px-3 sm:px-4 lg:px-6 pt-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Best Sellers Section */}
+          <div className="w-full lg:ml-0 rounded-[2rem] border border-[#ead8d0] bg-white/65 p-5 shadow-sm">
+            <div className="mb-5">
+              <span className="inline-flex rounded-full bg-white/90 px-4 py-2 text-[11px] font-bold uppercase tracking-[0.22em] text-[#d9779b] shadow-sm border border-[#f1ded8]">
+                Best Sellers
+              </span>
+            </div>
 
+            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-2 gap-4">
+              {bestSellerProducts.map((product) => (
+                <div
+                  key={product.id}
+                  className="group relative overflow-hidden rounded-[2rem] bg-stone-100 shadow-sm border border-stone-100"
+                >
+                  <div className="relative aspect-[4/5] overflow-hidden rounded-[2rem]">
+                    <img
+                      src={getProductImage(product)}
+                      alt={product.name}
+                      className="w-full h-full object-cover select-none transition duration-700 group-hover:scale-105"
+                    />
+
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/10 opacity-80" />
+
+                    <div className="absolute bottom-4 left-4 right-4">
+                      <h4 className="text-white font-semibold text-sm line-clamp-1">
+                        {product.name}
+                      </h4>
+                      <p className="text-white/90 text-sm mt-1">
+                        {product.price} $
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* New Arrivals Section */}
+          <div className="w-full lg:ml-0 rounded-[2rem] border border-[#ead8d0] bg-white/65 p-5 shadow-sm">
+            <div className="mb-5">
+              <span className="inline-flex rounded-full bg-white/90 px-4 py-2 text-[11px] font-bold uppercase tracking-[0.22em] text-[#d9779b] shadow-sm border border-[#f1ded8]">
+                New Arrivals
+              </span>
+            </div>
+
+            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-2 gap-4">
+              {newArrivalProducts.map((product) => (
+                <div
+                  key={product.id}
+                  className="group relative overflow-hidden rounded-[2rem] bg-stone-100 shadow-sm border border-stone-100"
+                >
+                  <div className="relative aspect-[4/5] overflow-hidden rounded-[2rem]">
+                    <img
+                      src={getProductImage(product)}
+                      alt={product.name}
+                      className="w-full h-full object-cover select-none transition duration-700 group-hover:scale-105"
+                    />
+
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/10 opacity-80" />
+
+                    <div className="absolute bottom-4 left-4 right-4">
+                      <h4 className="text-white font-semibold text-sm line-clamp-1">
+                        {product.name}
+                      </h4>
+                      <p className="text-white/90 text-sm mt-1">
+                        {product.price} $
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
       <section className="bg-gradient-to-r from-orange-50/30 to-rose-50/20 py-10 border-t border-b border-orange-50/60 text-center px-6">
         <p className="text-sm md:text-base font-light tracking-wide text-stone-600">
           {t.custNotification}
