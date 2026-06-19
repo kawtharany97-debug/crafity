@@ -17,6 +17,7 @@ export default function App() {
   const resultsRef = useRef(null);
   const [fullscreenImage, setFullscreenImage] = useState(null);
   const [showBackToTop, setShowBackToTop] = useState(false);
+  const [selectedShowcaseLabel, setSelectedShowcaseLabel] = useState(null);
 
   const getProductImage = (item) => {
     const image = item?.image || item?.image_url || '';
@@ -352,12 +353,24 @@ export default function App() {
               field.toLowerCase().includes(searchTerm.toLowerCase())
             )
         )
+      : selectedShowcaseLabel
+      ? allProducts.filter((item) => item.label === selectedShowcaseLabel)
       : selectedCategory
       ? allProducts.filter((item) => item.category === dbKey)
       : [];
 
   const isSearching = searchTerm.trim() !== '';
   const activeSlide = showcaseProducts[heroSliderIndex] || {};
+
+  const pageTitle = selectedShowcaseLabel
+    ? selectedShowcaseLabel === 'best-seller'
+      ? lang === 'Arabic'
+        ? 'الأكثر مبيعاً'
+        : 'Best Sellers'
+      : lang === 'Arabic'
+      ? 'وصل حديثاً'
+      : 'New Arrivals'
+    : selectedCategory;
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -418,7 +431,11 @@ export default function App() {
               src="/logo.png"
               alt={t.logo}
               className="h-24 md:h-28 w-auto object-contain cursor-pointer transition-transform duration-200 active:scale-95"
-              onClick={() => setSelectedCategory(null)}
+              onClick={() => {
+                setSelectedCategory(null);
+                setSelectedShowcaseLabel(null);
+                setSearchTerm('');
+              }}
               onError={(e) => {
                 e.target.style.display = 'none';
                 e.target.parentNode.innerHTML = `<div class="text-3xl font-light tracking-wide text-[#d9779b] py-4">${t.logo}</div>`;
@@ -450,7 +467,7 @@ export default function App() {
 
       {/* Premium Fashion Split Slider Engine */}
       <AnimatePresence mode="wait">
-        {!selectedCategory && (
+        {!selectedCategory && !selectedShowcaseLabel && (
           <section className="relative w-full overflow-hidden min-h-[560px] lg:min-h-[640px] flex items-center transition-colors duration-700">
             <AnimatePresence initial={false} custom={sliderDirection}>
               <motion.div
@@ -627,7 +644,7 @@ export default function App() {
 
       <section className="max-w-7xl mx-auto px-6 pt-0 pb-2 min-h-[500px]">
         <AnimatePresence mode="wait">
-          {!selectedCategory && !isSearching ? (
+          {!selectedCategory && !selectedShowcaseLabel && !isSearching ? (
             <motion.div
               key="grid-layout"
               initial={{ opacity: 0, y: 15 }}
@@ -644,7 +661,11 @@ export default function App() {
                 {categoriesData[lang].map((cat) => (
                   <div
                     key={cat.categoryName}
-                    onClick={() => setSelectedCategory(cat.categoryName)}
+                    onClick={() => {
+                      setSelectedCategory(cat.categoryName);
+                      setSelectedShowcaseLabel(null);
+                      scrollToTop();
+                    }}
                     className="group cursor-pointer flex flex-col items-center"
                   >
                     <div className="aspect-square w-full bg-[#fff9f6] rounded-2xl flex items-center justify-center border-2 border-stone-100 group-hover:border-[#d9779b] transition-all duration-300 shadow-sm relative overflow-hidden">
@@ -663,70 +684,89 @@ export default function App() {
                       {t.bestSellers}
                     </span>
                   </div>
+                  <div
+                    onClick={() => {
+                      setSelectedCategory(null);
+                      setSelectedShowcaseLabel('best-seller');
+                      setSearchTerm('');
+                      scrollToTop();
+                    }}
+                    className="cursor-pointer"
+                  >
+                    <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-2 gap-4">
+                      {bestSellerProducts.map((product) => (
+                        <div
+                          key={product.id}
+                          className="group relative overflow-hidden rounded-[2rem] bg-stone-100 shadow-sm border border-stone-100"
+                        >
+                          <div className="relative aspect-[4/5] overflow-hidden rounded-[2rem]">
+                            <img
+                              src={getProductImage(product)}
+                              alt={product.name}
+                              className="w-full h-full object-cover select-none transition duration-700 group-hover:scale-105"
+                            />
 
-                  <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-2 gap-4">
-                    {bestSellerProducts.map((product) => (
-                      <div
-                        key={product.id}
-                        className="group relative overflow-hidden rounded-[2rem] bg-stone-100 shadow-sm border border-stone-100"
-                      >
-                        <div className="relative aspect-[4/5] overflow-hidden rounded-[2rem]">
-                          <img
-                            src={getProductImage(product)}
-                            alt={product.name}
-                            className="w-full h-full object-cover select-none transition duration-700 group-hover:scale-105"
-                          />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/10 opacity-80" />
 
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/10 opacity-80" />
-
-                          <div className="absolute bottom-4 left-4 right-4">
-                            <h4 className="text-white font-semibold text-sm line-clamp-1">
-                              {product.name}
-                            </h4>
-                            <p className="text-white/90 text-sm mt-1">
-                              {product.price} $
-                            </p>
+                            <div className="absolute bottom-4 left-4 right-4">
+                              <h4 className="text-white font-semibold text-sm line-clamp-1">
+                                {product.name}
+                              </h4>
+                              <p className="text-white/90 text-sm mt-1">
+                                {product.price} $
+                              </p>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
                 </div>
 
                 {/* New Arrivals Section */}
-                <div className="w-full lg:ml-0 rounded-[2rem] border border-[#ead8d0] bg-white/65 p-5 shadow-sm">
-                  <div className="mb-5">
-                    <span className="inline-flex rounded-full bg-white/90 px-4 py-2 text-[11px] font-bold uppercase tracking-[0.22em] text-[#d9779b] shadow-sm border border-[#f1ded8]">
-                      {t.newArrivals}
-                    </span>
-                  </div>
+                <div
+                  onClick={() => {
+                    setSelectedCategory(null);
+                    setSelectedShowcaseLabel('new-arrival');
+                    setSearchTerm('');
+                    scrollToTop();
+                  }}
+                  className="cursor-pointer"
+                >
+                  <div className="w-full lg:ml-0 rounded-[2rem] border border-[#ead8d0] bg-white/65 p-5 shadow-sm">
+                    <div className="mb-5">
+                      <span className="inline-flex rounded-full bg-white/90 px-4 py-2 text-[11px] font-bold uppercase tracking-[0.22em] text-[#d9779b] shadow-sm border border-[#f1ded8]">
+                        {t.newArrivals}
+                      </span>
+                    </div>
 
-                  <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-2 gap-4">
-                    {newArrivalProducts.map((product) => (
-                      <div
-                        key={product.id}
-                        className="group relative overflow-hidden rounded-[2rem] bg-stone-100 shadow-sm border border-stone-100"
-                      >
-                        <div className="relative aspect-[4/5] overflow-hidden rounded-[2rem]">
-                          <img
-                            src={getProductImage(product)}
-                            alt={product.name}
-                            className="w-full h-full object-cover select-none transition duration-700 group-hover:scale-105"
-                          />
+                    <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-2 gap-4">
+                      {newArrivalProducts.map((product) => (
+                        <div
+                          key={product.id}
+                          className="group relative overflow-hidden rounded-[2rem] bg-stone-100 shadow-sm border border-stone-100"
+                        >
+                          <div className="relative aspect-[4/5] overflow-hidden rounded-[2rem]">
+                            <img
+                              src={getProductImage(product)}
+                              alt={product.name}
+                              className="w-full h-full object-cover select-none transition duration-700 group-hover:scale-105"
+                            />
 
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/10 opacity-80" />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/10 opacity-80" />
 
-                          <div className="absolute bottom-4 left-4 right-4">
-                            <h4 className="text-white font-semibold text-sm line-clamp-1">
-                              {product.name}
-                            </h4>
-                            <p className="text-white/90 text-sm mt-1">
-                              {product.price} $
-                            </p>
+                            <div className="absolute bottom-4 left-4 right-4">
+                              <h4 className="text-white font-semibold text-sm line-clamp-1">
+                                {product.name}
+                              </h4>
+                              <p className="text-white/90 text-sm mt-1">
+                                {product.price} $
+                              </p>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -741,18 +781,31 @@ export default function App() {
             >
               {!isSearching && (
                 <button
-                  onClick={() => setSelectedCategory(null)}
-                  className="px-5 py-2 text-xs font-semibold tracking-wide rounded-full border border-orange-100 text-stone-600 bg-white hover:bg-orange-50/50 transition"
+                  onClick={() => {
+                    setSelectedCategory(null);
+                    setSelectedShowcaseLabel(null);
+                    setSearchTerm('');
+                  }}
+                  className="mt-4 px-5 py-2 text-xs font-semibold tracking-wide rounded-full border border-orange-100 text-stone-600 bg-white hover:bg-orange-50/50 transition"
                 >
                   {t.backBtn}
                 </button>
               )}
               {!isSearching && (
-                <div className="flex items-center gap-4 overflow-x-auto py-2 border-b border-orange-50">
+                <div
+                  className="flex items-center gap-4 overflow-x-auto py-2 border-b border-orange-50
+  [scrollbar-color:transparent_transparent]
+  [&::-webkit-scrollbar]:h-2
+  [&::-webkit-scrollbar-track]:bg-transparent
+  [&::-webkit-scrollbar-thumb]:bg-transparent"
+                >
                   {categoriesData[lang].map((cat) => (
                     <button
                       key={cat.categoryName}
-                      onClick={() => setSelectedCategory(cat.categoryName)}
+                      onClick={() => {
+                        setSelectedCategory(cat.categoryName);
+                        setSelectedShowcaseLabel(null);
+                      }}
                       className={`w-24 h-24 rounded-full border text-lg flex items-center justify-center transition-all flex-shrink-0 relative overflow-hidden bg-[#fff9f6] ${
                         selectedCategory === cat.categoryName
                           ? 'border-[#d9779b] shadow-sm scale-95'
