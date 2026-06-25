@@ -423,6 +423,10 @@ export default function App() {
         t.dir === 'rtl' ? 'font-sans text-right' : 'font-sans text-left'
       }`}
     >
+    <h1 className="hidden">
+      Crafity Lebanon - Handmade Crafts, Candles, Soap, Resin Art, Crochet and Craft Supplies
+    </h1>
+    
       {/* Navbar */}
       <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-orange-50 shadow-sm">
         <div className="max-w-7xl mx-auto px-6 py-2 flex flex-col md:flex-row items-center justify-between gap-4">
