@@ -674,7 +674,10 @@ export default function App() {
                   >
                     <div className="aspect-square w-full bg-[#fff9f6] rounded-2xl flex items-center justify-center border-2 border-stone-100 group-hover:border-[#d9779b] transition-all duration-300 shadow-sm relative overflow-hidden">
                       <div className="w-full h-full flex items-center justify-center text-5xl opacity-90 group-hover:opacity-100 group-hover:scale-105 transition duration-300">
-                        alt={`${cat.categoryName} category at Crafity Lebanon`}
+                        {renderIcon(
+                          cat.icon,
+                          `${cat.categoryName} category at Crafity Lebanon`
+                        )}
                       </div>
                     </div>
                   </div>
@@ -817,7 +820,10 @@ export default function App() {
                       }`}
                       title={cat.categoryName}
                     >
-                      alt={`${cat.categoryName} category at Crafity Lebanon`}
+                      {renderIcon(
+                        cat.icon,
+                        `${cat.categoryName} category at Crafity Lebanon`
+                      )}
                     </button>
                   ))}
                 </div>
