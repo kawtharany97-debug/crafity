@@ -2,12 +2,13 @@ import React, { useState, useEffect, useRef } from 'react';
 //import Home from './pages/Home';
 import { motion, AnimatePresence } from 'framer-motion';
 import { supabase } from '../supabaseClient';
-
+import { useNavigate } from "react-router-dom";
 
 const bucketUrl =
   'https://difogkabffvfdmwyykcc.supabase.co/storage/v1/object/public';
 
 export default function Home({ allProducts }) {
+  const navigate = useNavigate();
   const [lang, setLang] = useState('English');
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [macrameProducts, setMacrameProducts] = useState([]);
@@ -61,13 +62,13 @@ export default function Home({ allProducts }) {
       'أعمال الريزن': 'resin',
       Candles: 'candles',
       شمع: 'candles',
-      'Crochet Art': 'crochet',
+      'Crochet': 'crochet',
       كروشيه: 'crochet',
       Giftbox: 'giftbox',
       'حزمة هدايا': 'giftbox',
-      'Gypsum Art': 'gypsum',
+      'Gypsum': 'gypsum',
       كونكريت: 'gypsum',
-      'Soap Art': 'soap',
+      'Soap': 'soap',
       صابون: 'soap',
       'Tools & Supplies': 'supplies',
       'مواد أوّليّة': 'supplies',
@@ -81,7 +82,7 @@ export default function Home({ allProducts }) {
       { categoryName: 'Macrame', icon: '/cat-macrame.jpg' },
       { categoryName: 'Resin Art', icon: '/cat-resin.jpg' },
       { categoryName: 'Candles', icon: '/cat-candles.jpg' },
-      { categoryName: 'Handmade Soap', icon: '/cat-soap.jpg' },
+      { categoryName: 'Soap', icon: '/cat-soap.jpg' },
       { categoryName: 'Crochet', icon: '/cat-crochet.jpg' },
       { categoryName: 'Gypsum', icon: '/cat-gypsum.jpg' },
       { categoryName: 'Beads', icon: '/cat-beads.jpg' },
@@ -324,7 +325,7 @@ export default function Home({ allProducts }) {
     'أعمال الريزن': 'resin',
     Candles: 'candles',
     الشموع: 'candles',
-    'Handmade Soap': 'soap',
+    'Soap': 'soap',
     'الصابون الطبيعي': 'soap',
     Crochet: 'crochet',
     الكروشيه: 'crochet',
@@ -668,9 +669,8 @@ export default function Home({ allProducts }) {
                   <div
                     key={cat.categoryName}
                     onClick={() => {
-                      setSelectedCategory(cat.categoryName);
-                      setSelectedShowcaseLabel(null);
-                      scrollToTop();
+                      console.log("Category name", cat)
+                      navigate(`/category/${isSupabaseCategory(cat.categoryName)}`);
                     }}
                     className="group cursor-pointer flex flex-col items-center"
                   >
@@ -695,10 +695,7 @@ export default function Home({ allProducts }) {
                   </div>
                   <div
                     onClick={() => {
-                      setSelectedCategory(null);
-                      setSelectedShowcaseLabel('best-seller');
-                      setSearchTerm('');
-                      scrollToTop();
+                      navigate("/label/best-seller");
                     }}
                     className="cursor-pointer"
                   >
@@ -735,10 +732,7 @@ export default function Home({ allProducts }) {
                 {/* New Arrivals Section */}
                 <div
                   onClick={() => {
-                    setSelectedCategory(null);
-                    setSelectedShowcaseLabel('new-arrival');
-                    setSearchTerm('');
-                    scrollToTop();
+                    navigate("/label/new-arrival");
                   }}
                   className="cursor-pointer"
                 >

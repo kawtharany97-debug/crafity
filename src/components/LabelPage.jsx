@@ -2,19 +2,20 @@ import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import ProductGrid from "../components/ProductGrid";
 
-export default function CategoryPage({ allProducts }) {
-  const { categoryName } = useParams();
+export default function LabelPage({ allProducts }) {
+  const { labelName } = useParams();
   const [showBackToTop, setShowBackToTop] = useState(false);
 
   const filteredProducts = allProducts.filter(
     (item) =>
-      item.category?.trim().toLowerCase() ===
-      categoryName?.trim().toLowerCase()
+      item.label?.trim().toLowerCase() ===
+      labelName?.trim().toLowerCase()
   );
 
-  const formattedCategory = categoryName
-    ?.replace(/-/g, " ")
-    .replace(/\b\w/g, (char) => char.toUpperCase());
+  const formattedLabel =
+    labelName
+      ?.replace(/-/g, " ")
+      .replace(/\b\w/g, (char) => char.toUpperCase()) + "s";
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -28,7 +29,7 @@ export default function CategoryPage({ allProducts }) {
       top: 0,
       behavior: "auto",
     });
-  }, [categoryName]);
+  }, [labelName]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -58,7 +59,7 @@ export default function CategoryPage({ allProducts }) {
           </p>
 
           <h1 className="text-3xl font-semibold tracking-tight text-[#4b3d39]">
-            {formattedCategory}
+            {formattedLabel}
           </h1>
         </div>
 

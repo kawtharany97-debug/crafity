@@ -4,6 +4,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import { supabase } from './supabaseClient'; // Ensure this path is correct
 import Home from '../src/pages/Home';
 import CategoryPage from '../src/components/CategoryPage';
+import LabelPage from '../src/components/LabelPage';
 
 export default function App() {
   const [allProducts, setAllProducts] = useState([]);
@@ -22,6 +23,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home allProducts={allProducts} />} />
           <Route path="/category/:categoryName" element={<CategoryPage allProducts={allProducts} />} />
+          <Route path="/label/:labelName" element={<LabelPage allProducts={allProducts} />} />
         </Routes>
       </BrowserRouter>
     </HelmetProvider>
