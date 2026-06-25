@@ -1,6 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { supabase } from './supabaseClient';
+import { Helmet } from "react-helmet-async";
+
+<Helmet>
+  <title>
+    Crafity Lebanon | Handmade Crafts & Supplies
+  </title>
+
+  <meta
+    name="description"
+    content="Shop handmade macrame, candles, soap art, resin art, crochet, beads and supplies."
+  />
+</Helmet>
 
 const bucketUrl =
   'https://difogkabffvfdmwyykcc.supabase.co/storage/v1/object/public';
