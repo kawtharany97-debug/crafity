@@ -426,14 +426,14 @@ export default function App() {
     <h1 className="hidden">
       Crafity Lebanon - Handmade Crafts, Candles, Soap, Resin Art, Crochet and Craft Supplies
     </h1>
-    
+
       {/* Navbar */}
       <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-orange-50 shadow-sm">
         <div className="max-w-7xl mx-auto px-6 py-2 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center justify-center md:justify-start min-w-[180px]">
             <img
               src="/logo.png"
-              alt={t.logo}
+              alt="Crafity Lebanon Handmade Crafts Store"
               className="h-24 md:h-28 w-auto object-contain cursor-pointer transition-transform duration-200 active:scale-95"
               onClick={() => {
                 setSelectedCategory(null);
@@ -630,7 +630,7 @@ export default function App() {
                           ) : (
                             <img
                               src={getProductImage(activeSlide)}
-                              alt={activeSlide.name}
+                              alt={`${activeSlide.name} handmade craft by Crafity Lebanon`}
                               className="w-full h-full object-cover select-none transition duration-700 group-hover:scale-105"
                             />
                           )}
@@ -674,7 +674,7 @@ export default function App() {
                   >
                     <div className="aspect-square w-full bg-[#fff9f6] rounded-2xl flex items-center justify-center border-2 border-stone-100 group-hover:border-[#d9779b] transition-all duration-300 shadow-sm relative overflow-hidden">
                       <div className="w-full h-full flex items-center justify-center text-5xl opacity-90 group-hover:opacity-100 group-hover:scale-105 transition duration-300">
-                        {renderIcon(cat.icon, cat.categoryName)}
+                        alt={`${cat.categoryName} category at Crafity Lebanon`}
                       </div>
                     </div>
                   </div>
@@ -706,7 +706,7 @@ export default function App() {
                           <div className="relative aspect-[4/5] overflow-hidden rounded-[2rem]">
                             <img
                               src={getProductImage(product)}
-                              alt={product.name}
+                              alt={`${product.name} handmade craft by Crafity Lebanon`}
                               className="w-full h-full object-cover select-none transition duration-700 group-hover:scale-105"
                             />
 
@@ -753,7 +753,7 @@ export default function App() {
                           <div className="relative aspect-[4/5] overflow-hidden rounded-[2rem]">
                             <img
                               src={getProductImage(product)}
-                              alt={product.name}
+                              alt={`${product.name} handmade craft by Crafity Lebanon`}
                               className="w-full h-full object-cover select-none transition duration-700 group-hover:scale-105"
                             />
 
@@ -817,7 +817,7 @@ export default function App() {
                       }`}
                       title={cat.categoryName}
                     >
-                      {renderIcon(cat.icon, cat.categoryName)}
+                      alt={`${cat.categoryName} category at Crafity Lebanon`}
                     </button>
                   ))}
                 </div>
@@ -846,7 +846,7 @@ export default function App() {
                         {item.image_url ? (
                           <img
                             src={getProductImage(item)}
-                            alt={item.name}
+                            alt={`${item.name} handmade craft by Crafity Lebanon`}
                             className="w-full h-full object-cover"
                             onError={(e) => {
                               e.target.onerror = null;
@@ -966,7 +966,7 @@ export default function App() {
                 {quickViewItem.image_url ? (
                   <img
                     src={getProductImage(quickViewItem)}
-                    alt={quickViewItem.name}
+                    alt={`${quickViewItem.name} handmade craft by Crafity Lebanon`}
                     className="w-full h-full object-cover"
                     onClick={() =>
                       setFullscreenImage(getProductImage(quickViewItem))
