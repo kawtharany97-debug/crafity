@@ -7,9 +7,8 @@ import { useNavigate } from "react-router-dom";
 const bucketUrl =
   'https://difogkabffvfdmwyykcc.supabase.co/storage/v1/object/public';
 
-export default function Home({ allProducts }) {
+export default function Home({ allProducts, lang, setLang }) {
   const navigate = useNavigate();
-  const [lang, setLang] = useState('English');
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [macrameProducts, setMacrameProducts] = useState([]);
   const [quickViewItem, setQuickViewItem] = useState(null);

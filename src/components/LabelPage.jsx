@@ -3,22 +3,27 @@ import { Helmet } from "react-helmet-async";
 import { useParams, Link } from "react-router-dom";
 import ProductGrid from "../components/ProductGrid";
 
-export default function LabelPage({ allProducts }) {
+export default function LabelPage({ allProducts, lang, setLang }) {
   const { labelName } = useParams();
   const labelTitles = {
-  "best-seller": "Best Sellers",
-  "new-arrival": "New Arrivals",
-};
+    English: {
+      "best-seller": "Best Sellers",
+      "new-arrival": "New Arrivals",
+    },
+    Arabic: {
+      "best-seller": "الأكثر مبيعًا",
+      "new-arrival": "وصل حديثًا",
+    },
+  };
 
-const formattedLabel =
-  labelTitles[labelName] ||
-  labelName
-    ?.replace(/-/g, " ")
-    .replace(/\b\w/g, (char) => char.toUpperCase());
+const formattedLabel = labelTitles[lang][labelName] || labelName;
 
-  const pageTitle = `${formattedLabel} | Crafity Lebanon`;
+const pageTitle = `${formattedLabel} | Crafity Lebanon`;
 
-  const pageDescription = `Browse ${formattedLabel} products from Crafity Lebanon. Handmade gifts, crafts and supplies.`;
+const pageDescription =
+  lang === "Arabic"
+    ? `تصفح ${formattedLabel} من كرافيتي لبنان، منتجات يدوية وهدايا مصنوعة بحب.`
+    : `Browse ${formattedLabel} products from Crafity Lebanon. Handmade gifts, crafts and supplies.`;
   const [showBackToTop, setShowBackToTop] = useState(false);
 
   const filteredProducts = allProducts.filter(
@@ -69,16 +74,28 @@ const formattedLabel =
     />
   </Helmet>
 
+  <div className="flex justify-between items-center mb-6 flex-wrap gap-4">
+  <Link
+    to="/"
+    className="inline-flex px-5 py-2 text-xs font-semibold tracking-wide rounded-full border border-orange-100 text-stone-600 bg-white hover:bg-orange-50/50 transition"
+  >
+    {lang === "Arabic" ? "← الرئيسية" : "← Back to Home"}
+  </Link>
+
+  <select
+    value={lang}
+    onChange={(e) => setLang(e.target.value)}
+    className="px-4 py-2 rounded-full border border-orange-100 bg-white"
+  >
+    <option value="English">English</option>
+    <option value="Arabic">العربية</option>
+  </select>
+</div>
+  
   {/* Existing page starts here */}
     <div className="min-h-screen bg-[#f7f0eb] text-[#4b3d39] overflow-x-hidden">
       <section className="max-w-7xl mx-auto px-6 py-10">
-        <Link
-          to="/"
-          className="inline-flex px-5 py-2 text-xs font-semibold tracking-wide rounded-full border border-orange-100 text-stone-600 bg-white hover:bg-orange-50/50 transition"
-        >
-          ← Back to Home
-        </Link>
-
+        
         <div className="mt-8 mb-8">
           <p className="text-xs font-bold text-[#d9779b] uppercase tracking-wider mb-3">
             All
@@ -89,7 +106,7 @@ const formattedLabel =
           </h1>
         </div>
 
-        <ProductGrid items={filteredProducts} lang="English" />
+        <ProductGrid items={filteredProducts} lang={lang} />
       </section>
 
       {showBackToTop && (

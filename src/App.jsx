@@ -9,6 +9,7 @@ import ProductPage from '../src/components/ProductPage';
 
 export default function App() {
   const [allProducts, setAllProducts] = useState([]);
+  const [lang, setLang] = useState("English");
 
   useEffect(() => {
     async function fetchData() {
@@ -21,20 +22,50 @@ export default function App() {
   return (
   <BrowserRouter>
     <Routes>
-      <Route
-  path="/product/:productId"
-  element={<ProductPage allProducts={allProducts} />}
-/>
-      <Route path="/" element={<Home allProducts={allProducts} />} />
-      <Route
-        path="/category/:categoryName"
-        element={<CategoryPage allProducts={allProducts} />}
+  <Route
+    path="/"
+    element={
+      <Home
+        allProducts={allProducts}
+        lang={lang}
+        setLang={setLang}
       />
-      <Route
-        path="/label/:labelName"
-        element={<LabelPage allProducts={allProducts} />}
+    }
+  />
+
+  <Route
+    path="/category/:categoryName"
+    element={
+      <CategoryPage
+        allProducts={allProducts}
+        lang={lang}
+        setLang={setLang}
       />
-    </Routes>
+    }
+  />
+
+  <Route
+    path="/label/:labelName"
+    element={
+      <LabelPage
+        allProducts={allProducts}
+        lang={lang}
+        setLang={setLang}
+      />
+    }
+  />
+
+  <Route
+    path="/product/:productId"
+    element={
+      <ProductPage
+        allProducts={allProducts}
+        lang={lang}
+        setLang={setLang}
+      />
+    }
+  />
+</Routes>
   </BrowserRouter>
 );
 }

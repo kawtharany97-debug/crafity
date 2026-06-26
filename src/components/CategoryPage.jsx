@@ -3,13 +3,44 @@ import { Helmet } from "react-helmet-async";
 import { useParams, Link } from "react-router-dom";
 import ProductGrid from "../components/ProductGrid";
 
-export default function CategoryPage({ allProducts }) {
-  const { categoryName } = useParams();
-  const formattedCategory = categoryName
-  ?.replace(/-/g, " ")
-  .replace(/\b\w/g, (char) => char.toUpperCase());
+export default function CategoryPage({
+  allProducts,
+  lang,
+  setLang,
+}) {
 
-  const categoryDescriptions = {
+  const { categoryName } = useParams();
+  
+  const categoryNames = {
+  English: {
+    macrame: "Macrame",
+    resin: "Resin Art",
+    candles: "Candles",
+    soap: "Soap",
+    crochet: "Crochet",
+    gypsum: "Gypsum",
+    beads: "Beads",
+    giftbox: "Giftbox",
+    supplies: "Tools & Supplies",
+  },
+
+  Arabic: {
+    macrame: "المكرامية",
+    resin: "أعمال الريزن",
+    candles: "الشموع",
+    soap: "الصابون الطبيعي",
+    crochet: "الكروشيه",
+    gypsum: "الجبس",
+    beads: "الخرز",
+    giftbox: "الهدايا",
+    supplies: "الأدوات والمستلزمات",
+  },
+};
+
+const formattedCategory =
+  categoryNames[lang][categoryName] || categoryName;  
+
+const categoryDescriptions = {
   macrame:
     "Discover handmade macrame products in Lebanon, including wall hangings, lamps, shelves, keychains, plant hangers, and home decor pieces crafted with care by Crafity.",
   resin:
@@ -91,13 +122,25 @@ const categoryDescription =
   {/* Existing page starts here */}
     <div className="min-h-screen bg-[#f7f0eb] text-[#4b3d39] overflow-x-hidden">
       <section className="max-w-7xl mx-auto px-6 py-10">
-        <Link
-  to="/"
-  className="inline-flex px-5 py-2 text-xs font-semibold tracking-wide rounded-full border border-orange-100 text-stone-600 bg-white hover:bg-orange-50/50 transition"
->
-  ← Back to Home
-</Link>
+        <div className="flex justify-between items-center mb-6 flex-wrap gap-4">
 
+  <Link
+    to="/"
+    className="inline-flex px-5 py-2 text-xs font-semibold tracking-wide rounded-full border border-orange-100 text-stone-600 bg-white hover:bg-orange-50/50 transition"
+  >
+    {lang === "Arabic" ? "← الرئيسية" : "← Back to Home"}
+  </Link>
+
+  <select
+    value={lang}
+    onChange={(e) => setLang(e.target.value)}
+    className="px-4 py-2 rounded-full border border-orange-100 bg-white"
+  >
+    <option value="English">English</option>
+    <option value="Arabic">العربية</option>
+  </select>
+
+</div>
         <div className="mt-8 mb-8">
   <p className="text-xs font-bold text-[#d9779b] uppercase tracking-wider mb-3">
     All
@@ -129,16 +172,7 @@ const categoryDescription =
           : "bg-white border border-orange-100 text-[#4b3d39] hover:bg-orange-50"
       }`}
     >
-      {cat
-        .replace("giftbox", "Giftbox")
-        .replace("supplies", "Tools & Supplies")
-        .replace("macrame", "Macrame")
-        .replace("resin", "Resin Art")
-        .replace("candles", "Candles")
-        .replace("soap", "Soap")
-        .replace("crochet", "Crochet")
-        .replace("gypsum", "Gypsum")
-        .replace("beads", "Beads")}
+      {categoryNames[lang][cat]}
     </Link>
   ))}
 </div>
@@ -147,7 +181,10 @@ const categoryDescription =
   {categoryDescription}
 </p>
 
-<ProductGrid items={filteredProducts} lang="English" />
+<ProductGrid
+  items={filteredProducts}
+  lang={lang}
+/>
       </section>
 
       {showBackToTop && (
