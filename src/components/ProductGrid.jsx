@@ -82,6 +82,7 @@ export default function ProductGrid({
           return (
             <Link
               to={`/product/${item.id}`}
+              state={{ from: window.location.pathname }}
               key={item.id}
               className="group bg-white rounded-2xl p-4 border border-orange-50/70 shadow-sm flex flex-col justify-between relative"
             >

@@ -1,11 +1,13 @@
 import React from "react";
 import { Helmet } from "react-helmet-async";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, useNavigate, useLocation, Link } from "react-router-dom";
 const bucketUrl =
   "https://difogkabffvfdmwyykcc.supabase.co/storage/v1/object/public";
 
 export default function ProductPage({ allProducts }) {
   const navigate = useNavigate();
+  const location = useLocation();
+  const backTo = location.state?.from || "/";
   const { productId } = useParams();
 
   const getProductImage = (item) => {
@@ -23,7 +25,7 @@ export default function ProductPage({ allProducts }) {
     return (
       <div className="min-h-screen bg-[#f7f0eb] text-[#4b3d39] px-6 py-10">
         <button
-          onClick={() => navigate(-1)}
+         onClick={() => navigate(backTo)}
           className="inline-flex px-5 py-2 text-xs font-semibold tracking-wide rounded-full border border-orange-100 text-stone-600 bg-white hover:bg-orange-50/50 transition"
         >
           ← Back
@@ -90,7 +92,7 @@ export default function ProductPage({ allProducts }) {
 
       <main className="min-h-screen bg-[#f7f0eb] text-[#4b3d39] px-6 py-10">
         <button
-          onClick={() => navigate(-1)}
+          onClick={() => navigate(backTo)}
           className="inline-flex px-5 py-2 text-xs font-semibold tracking-wide rounded-full border border-orange-100 text-stone-600 bg-white hover:bg-orange-50/50 transition"
         >
           ← Back
