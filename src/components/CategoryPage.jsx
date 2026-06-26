@@ -66,24 +66,54 @@ export default function CategoryPage({ allProducts }) {
   {/* Existing page starts here */}
     <div className="min-h-screen bg-[#f7f0eb] text-[#4b3d39] overflow-x-hidden">
       <section className="max-w-7xl mx-auto px-6 py-10">
-        <Link
-          to="/"
-          className="inline-flex px-5 py-2 text-xs font-semibold tracking-wide rounded-full border border-orange-100 text-stone-600 bg-white hover:bg-orange-50/50 transition"
-        >
-          ← Back to Home
-        </Link>
+        
 
         <div className="mt-8 mb-8">
-          <p className="text-xs font-bold text-[#d9779b] uppercase tracking-wider mb-3">
-            All
-          </p>
+  <p className="text-xs font-bold text-[#d9779b] uppercase tracking-wider mb-3">
+    All
+  </p>
 
-          <h1 className="text-3xl font-semibold tracking-tight text-[#4b3d39]">
-            {formattedCategory}
-          </h1>
-        </div>
+  <h1 className="text-3xl font-semibold tracking-tight text-[#4b3d39]">
+    {formattedCategory}
+  </h1>
+</div>
 
-        <ProductGrid items={filteredProducts} lang="English" />
+<div className="flex items-center gap-3 overflow-x-auto pb-4 mb-8 border-b border-orange-100">
+  {[
+    "macrame",
+    "resin",
+    "candles",
+    "soap",
+    "crochet",
+    "gypsum",
+    "beads",
+    "giftbox",
+    "supplies",
+  ].map((cat) => (
+    <Link
+      key={cat}
+      to={`/category/${cat}`}
+      className={`px-5 py-2 rounded-full text-sm whitespace-nowrap transition ${
+        categoryName === cat
+          ? "bg-[#d9779b] text-white"
+          : "bg-white border border-orange-100 text-[#4b3d39] hover:bg-orange-50"
+      }`}
+    >
+      {cat
+        .replace("giftbox", "Giftbox")
+        .replace("supplies", "Tools & Supplies")
+        .replace("macrame", "Macrame")
+        .replace("resin", "Resin Art")
+        .replace("candles", "Candles")
+        .replace("soap", "Soap")
+        .replace("crochet", "Crochet")
+        .replace("gypsum", "Gypsum")
+        .replace("beads", "Beads")}
+    </Link>
+  ))}
+</div>
+
+<ProductGrid items={filteredProducts} lang="English" />
       </section>
 
       {showBackToTop && (
