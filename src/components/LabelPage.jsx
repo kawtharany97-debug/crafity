@@ -1,9 +1,24 @@
 import React, { useEffect, useState } from "react";
+import { Helmet } from "react-helmet-async";
 import { useParams, Link } from "react-router-dom";
 import ProductGrid from "../components/ProductGrid";
 
 export default function LabelPage({ allProducts }) {
   const { labelName } = useParams();
+  const labelTitles = {
+  "best-seller": "Best Sellers",
+  "new-arrival": "New Arrivals",
+};
+
+const formattedLabel =
+  labelTitles[labelName] ||
+  labelName
+    ?.replace(/-/g, " ")
+    .replace(/\b\w/g, (char) => char.toUpperCase());
+    
+  const pageTitle = `${formattedLabel} | Crafity Lebanon`;
+
+  const pageDescription = `Browse ${formattedLabel} products from Crafity Lebanon. Handmade gifts, crafts and supplies.`;
   const [showBackToTop, setShowBackToTop] = useState(false);
 
   const filteredProducts = allProducts.filter(
@@ -44,6 +59,22 @@ export default function LabelPage({ allProducts }) {
   }, []);
 
   return (
+    <>
+  <Helmet>
+    <title>{pageTitle}</title>
+
+    <meta
+      name="description"
+      content={pageDescription}
+    />
+
+    <link
+      rel="canonical"
+      href={`https://www.crafity-lb.com/label/${labelName}`}
+    />
+  </Helmet>
+
+  {/* Existing page starts here */}
     <div className="min-h-screen bg-[#f7f0eb] text-[#4b3d39] overflow-x-hidden">
       <section className="max-w-7xl mx-auto px-6 py-10">
         <Link
@@ -77,5 +108,6 @@ export default function LabelPage({ allProducts }) {
         </div>
       )}
     </div>
+    </>
   );
 }

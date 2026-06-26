@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-//import Home from './pages/Home';
+import { Helmet } from "react-helmet-async";
 import { motion, AnimatePresence } from 'framer-motion';
 import { supabase } from '../supabaseClient';
 import { useNavigate } from "react-router-dom";
@@ -417,6 +417,34 @@ export default function Home({ allProducts }) {
     .slice(0, 4);
 
   return (
+    <>
+  <Helmet>
+  <title>
+    {selectedCategory
+      ? `${selectedCategory} | Crafity Lebanon`
+      : selectedShowcaseLabel
+      ? `${pageTitle} | Crafity Lebanon`
+      : "Crafity Lebanon | Handmade Macrame, Candles, Resin Art & Craft Supplies"}
+  </title>
+
+  <meta
+    name="description"
+    content={
+      selectedCategory
+        ? `Shop handmade ${selectedCategory} products in Lebanon from Crafity.`
+        : selectedShowcaseLabel
+        ? `Browse ${pageTitle} at Crafity Lebanon.`
+        : "Shop handmade macrame, candles, soap, resin art, crochet, gypsum, beads and craft supplies in Lebanon."
+    }
+  />
+
+  <link
+    rel="canonical"
+    href={`https://www.crafity-lb.com${
+      window.location.pathname
+    }`}
+  />
+</Helmet>
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -1138,5 +1166,6 @@ export default function Home({ allProducts }) {
         </div>
       )}
     </motion.div>
+    </>
   );
 }

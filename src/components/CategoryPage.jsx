@@ -1,9 +1,18 @@
 import React, { useEffect, useState } from "react";
+import { Helmet } from "react-helmet-async";
 import { useParams, Link } from "react-router-dom";
 import ProductGrid from "../components/ProductGrid";
 
 export default function CategoryPage({ allProducts }) {
   const { categoryName } = useParams();
+  const formattedCategory = categoryName
+  ?.replace(/-/g, " ")
+  .replace(/\b\w/g, (char) => char.toUpperCase());
+
+  const pageTitle = `${formattedCategory} | Crafity Lebanon`;
+
+  const pageDescription = `Shop handmade ${formattedCategory} products from Crafity Lebanon. Discover premium handcrafted gifts and craft supplies.`;
+
   const [showBackToTop, setShowBackToTop] = useState(false);
 
   const filteredProducts = allProducts.filter(
@@ -43,6 +52,22 @@ export default function CategoryPage({ allProducts }) {
   }, []);
 
   return (
+    <>
+  <Helmet>
+    <title>{pageTitle}</title>
+
+    <meta
+      name="description"
+      content={pageDescription}
+    />
+
+    <link
+      rel="canonical"
+      href={`https://www.crafity-lb.com/category/${categoryName}`}
+    />
+  </Helmet>
+
+  {/* Existing page starts here */}
     <div className="min-h-screen bg-[#f7f0eb] text-[#4b3d39] overflow-x-hidden">
       <section className="max-w-7xl mx-auto px-6 py-10">
         <Link
@@ -76,5 +101,6 @@ export default function CategoryPage({ allProducts }) {
         </div>
       )}
     </div>
+    </>
   );
 }
