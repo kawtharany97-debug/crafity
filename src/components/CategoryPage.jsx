@@ -21,10 +21,6 @@ export default function CategoryPage({ allProducts }) {
       categoryName?.trim().toLowerCase()
   );
 
-  const formattedCategory = categoryName
-    ?.replace(/-/g, " ")
-    .replace(/\b\w/g, (char) => char.toUpperCase());
-
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,

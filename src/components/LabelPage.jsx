@@ -15,7 +15,7 @@ const formattedLabel =
   labelName
     ?.replace(/-/g, " ")
     .replace(/\b\w/g, (char) => char.toUpperCase());
-    
+
   const pageTitle = `${formattedLabel} | Crafity Lebanon`;
 
   const pageDescription = `Browse ${formattedLabel} products from Crafity Lebanon. Handmade gifts, crafts and supplies.`;
@@ -26,11 +26,6 @@ const formattedLabel =
       item.label?.trim().toLowerCase() ===
       labelName?.trim().toLowerCase()
   );
-
-  const formattedLabel =
-    labelName
-      ?.replace(/-/g, " ")
-      .replace(/\b\w/g, (char) => char.toUpperCase()) + "s";
 
   const scrollToTop = () => {
     window.scrollTo({
