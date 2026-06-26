@@ -659,10 +659,13 @@ export default function Home({ allProducts, lang, setLang }) {
                             />
                           ) : (
                             <img
-                              src={getProductImage(activeSlide)}
-                              alt={`${activeSlide.name} handmade craft by Crafity Lebanon`}
-                              className="w-full h-full object-cover select-none transition duration-700 group-hover:scale-105"
-                            />
+  src={getProductImage(activeSlide)}
+  alt={`${activeSlide.name} handmade craft by Crafity Lebanon`}
+  loading="eager"
+  fetchPriority="high"
+  decoding="async"
+  className="w-full h-full object-cover select-none transition duration-700 group-hover:scale-105"
+/>
                           )}
                           <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/10 opacity-80" />
                         </motion.div>
@@ -736,6 +739,8 @@ export default function Home({ allProducts, lang, setLang }) {
                             <img
                               src={getProductImage(product)}
                               alt={`${product.name} handmade craft by Crafity Lebanon`}
+                              loading="lazy"
+                              decoding="async"
                               className="w-full h-full object-cover select-none transition duration-700 group-hover:scale-105"
                             />
 
@@ -780,6 +785,8 @@ export default function Home({ allProducts, lang, setLang }) {
                             <img
                               src={getProductImage(product)}
                               alt={`${product.name} handmade craft by Crafity Lebanon`}
+                              loading="lazy"
+                              decoding="async"
                               className="w-full h-full object-cover select-none transition duration-700 group-hover:scale-105"
                             />
 
@@ -882,6 +889,8 @@ export default function Home({ allProducts, lang, setLang }) {
                               e.target.src =
                                 'https://via.placeholder.com/400?text=Image+Not+Found';
                             }}
+                            loading="lazy"
+                            decoding="async"
                             onClick={(e) => {
                               e.stopPropagation();
 
