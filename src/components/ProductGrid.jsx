@@ -97,6 +97,7 @@ export default function ProductGrid({
                         "https://via.placeholder.com/400?text=Image+Not+Found";
                     }}
                     onClick={(e) => {
+                      e.preventDefault();
                       e.stopPropagation();
                       setFullscreenImage(getProductImage(item));
                     }}
@@ -162,7 +163,7 @@ export default function ProductGrid({
                         inStock: true,
                         description: lang === "Arabic" ? item.description_ar : item.description,
                    });
-   }}
+                 }}
                     className="text-stone-400 hover:text-[#d9779b] font-medium cursor-pointer uppercase tracking-wider"
                   >
                     {t.quickView}
@@ -171,7 +172,12 @@ export default function ProductGrid({
                   <span className="text-stone-300">|</span>
 
                   <span
-                    onClick={() => toggleDetails(item.id)}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      toggleDetails(item.id);
+                    }}
+    
                     className={`font-medium cursor-pointer uppercase tracking-wider transition ${
                       isExpanded
                         ? "text-[#d9779b]"
