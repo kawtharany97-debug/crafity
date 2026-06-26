@@ -86,9 +86,24 @@ export default function ProductPage({ allProducts }) {
   return (
     <>
       <Helmet>
-        <title>{productName} | Crafity Lebanon</title>
-        <meta name="description" content={`${productDescription.slice(0, 150)}`} />
-      </Helmet>
+  <title>{`${productName} | Handmade ${product.category || "Craft"} in Lebanon`}</title>
+
+  <meta
+    name="description"
+    content={`Buy ${productName} from Crafity Lebanon. Handmade ${
+      product.category || "craft"
+    } product crafted with care. Price: ${productPrice} USD.`}
+  />
+
+  <link
+    rel="canonical"
+    href={`https://www.crafity-lb.com/product/${product.id}`}
+  />
+
+  <script type="application/ld+json">
+    {JSON.stringify(schema)}
+  </script>
+</Helmet>
 
       <main className="min-h-screen bg-[#f7f0eb] text-[#4b3d39] px-6 py-10">
         <button
