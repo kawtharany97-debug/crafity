@@ -66,7 +66,12 @@ export default function CategoryPage({ allProducts }) {
   {/* Existing page starts here */}
     <div className="min-h-screen bg-[#f7f0eb] text-[#4b3d39] overflow-x-hidden">
       <section className="max-w-7xl mx-auto px-6 py-10">
-        
+        <Link
+  to="/"
+  className="inline-flex px-5 py-2 text-xs font-semibold tracking-wide rounded-full border border-orange-100 text-stone-600 bg-white hover:bg-orange-50/50 transition"
+>
+  ← Back to Home
+</Link>
 
         <div className="mt-8 mb-8">
   <p className="text-xs font-bold text-[#d9779b] uppercase tracking-wider mb-3">
