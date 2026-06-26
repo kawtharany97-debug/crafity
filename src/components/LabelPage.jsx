@@ -110,14 +110,14 @@ const pageDescription =
       </section>
 
       {showBackToTop && (
-        <div className="fixed bottom-8 left-1/2 -translate-x-1/2 w-full max-w-7xl px-6 z-50 flex justify-end">
-          <button
-            onClick={scrollToTop}
-            className="w-16 h-16 rounded-full bg-[#fff9f6] border border-[#d9779b]/30 shadow-lg flex items-center justify-center hover:scale-105 transition"
-          >
-            <span className="text-[#d9779b] text-2xl">↑</span>
-          </button>
-        </div>
+        <div className="fixed bottom-8 right-8 z-50">
+  <button
+    onClick={scrollToTop}
+    className="w-16 h-16 rounded-full bg-[#fff9f6] border border-[#d9779b]/30 shadow-lg flex items-center justify-center hover:scale-105 transition"
+  >
+    <span className="text-[#d9779b] text-2xl">↑</span>
+  </button>
+</div>
       )}
     </div>
     </>
