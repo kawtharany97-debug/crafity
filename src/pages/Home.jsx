@@ -1067,7 +1067,7 @@ export default function Home({ allProducts, lang, setLang }) {
               <a
                 href="https://instagram.com/crafity.lb"
                 target="_blank"
-                rel="noopener noreferrer"
+                rel="me noopener noreferrer"
                 className="hover:scale-110 transition duration-300"
                 title="Instagram"
               >
@@ -1079,9 +1079,9 @@ export default function Home({ allProducts, lang, setLang }) {
                 </svg>
               </a>
               <a
-                href="https://www.facebook.com/share/1CTabJDZnc/?mibextid=wwXIfr"
+                href="https://www.facebook.com/profile.php?id=61554831868002&rdid=Wzm1jwqiEEJfMPE2&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F18FTL5zJC9%2F#"
                 target="_blank"
-                rel="noopener noreferrer"
+                rel="me noopener noreferrer"
                 className="hover:scale-110 transition duration-300"
                 title="Facebook"
               >
@@ -1092,7 +1092,7 @@ export default function Home({ allProducts, lang, setLang }) {
               <a
                 href="https://tiktok.com/@crafity.lb"
                 target="_blank"
-                rel="noopener noreferrer"
+                rel="me noopener noreferrer"
                 className="w-7 h-7 inline-flex items-center justify-center hover:scale-110 transition duration-300"
                 title="TikTok"
               >
