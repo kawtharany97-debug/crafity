@@ -9,6 +9,31 @@ export default function CategoryPage({ allProducts }) {
   ?.replace(/-/g, " ")
   .replace(/\b\w/g, (char) => char.toUpperCase());
 
+  const categoryDescriptions = {
+  macrame:
+    "Discover handmade macrame products in Lebanon, including wall hangings, lamps, shelves, keychains, plant hangers, and home decor pieces crafted with care by Crafity.",
+  resin:
+    "Shop resin art in Lebanon, including handmade trays, coasters, accessories, decorations, and unique personalized gifts designed with artistic details.",
+  candles:
+    "Explore handmade candles in Lebanon made for gifts, home decoration, events, and cozy spaces. Crafity offers elegant candle designs crafted with love.",
+  soap:
+    "Find handmade soap in Lebanon with beautiful artistic designs, perfect for gifts, souvenirs, and personal use.",
+  crochet:
+    "Browse crochet gifts in Lebanon, including handmade accessories, decorations, baby items, and creative pieces made with soft materials.",
+  gypsum:
+    "Shop handmade gypsum and concrete art in Lebanon, including home decor, trays, souvenirs, and elegant decorative pieces.",
+  beads:
+    "Discover beads and handmade accessories in Lebanon for jewelry making, crafts, decorations, and creative DIY projects.",
+  giftbox:
+    "Explore handmade gift boxes and souvenirs in Lebanon, perfect for birthdays, events, weddings, baby showers, and special occasions.",
+  supplies:
+    "Shop craft supplies in Lebanon, including materials for macrame, resin, crochet, beads, candles, gypsum, and DIY handmade projects.",
+};
+
+const categoryDescription =
+  categoryDescriptions[categoryName] ||
+  `Shop handmade ${formattedCategory} products from Crafity Lebanon.`;
+
   const pageTitle = `${formattedCategory} | Crafity Lebanon`;
 
   const pageDescription = `Shop handmade ${formattedCategory} products from Crafity Lebanon. Discover premium handcrafted gifts and craft supplies.`;
@@ -117,6 +142,10 @@ export default function CategoryPage({ allProducts }) {
     </Link>
   ))}
 </div>
+
+<p className="max-w-3xl text-sm leading-7 text-stone-600 mb-8">
+  {categoryDescription}
+</p>
 
 <ProductGrid items={filteredProducts} lang="English" />
       </section>
