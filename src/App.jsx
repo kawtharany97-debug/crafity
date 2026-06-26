@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import { supabase } from './supabaseClient'; // Ensure this path is correct
 import Home from '../src/pages/Home';
 import CategoryPage from '../src/components/CategoryPage';
@@ -66,6 +67,8 @@ export default function App() {
     }
   />
 </Routes>
+
+    <SpeedInsights />
   </BrowserRouter>
 );
 }
