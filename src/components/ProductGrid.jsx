@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 
 const bucketUrl =
@@ -79,7 +80,8 @@ export default function ProductGrid({
           const isExpanded = !!expandedDetails[item.id];
 
           return (
-            <div
+            <Link
+              to={`/product/${item.id}`}
               key={item.id}
               className="group bg-white rounded-2xl p-4 border border-orange-50/70 shadow-sm flex flex-col justify-between relative"
             >
@@ -133,7 +135,11 @@ export default function ProductGrid({
 
               <div className="pt-3">
                 <button
-                  onClick={() => sendOrderToWhatsApp(item)}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    sendOrderToWhatsApp(item);
+                }}
                   className="w-full py-2 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-medium text-xs flex items-center justify-center gap-2 shadow-sm transition"
                 >
                   {t.orderWhatsapp}
@@ -143,23 +149,20 @@ export default function ProductGrid({
               <div className="flex justify-between items-center pt-3 mt-2 border-t border-orange-50/50 text-[10px]">
                 <div className="flex items-center gap-2">
                   <span
-                    onClick={() =>
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+
                       setQuickViewItem({
                         id: item.id,
-                        name:
-                          lang === "Arabic"
-                            ? item.name_ar || item.name
-                            : item.name,
+                        name: lang === "Arabic" ? item.name_ar || item.name : item.name,
                         price: item.price,
                         image: item.image_url,
                         image_url: item.image_url,
                         inStock: true,
-                        description:
-                          lang === "Arabic"
-                            ? item.description_ar
-                            : item.description,
-                      })
-                    }
+                        description: lang === "Arabic" ? item.description_ar : item.description,
+                   });
+   }}
                     className="text-stone-400 hover:text-[#d9779b] font-medium cursor-pointer uppercase tracking-wider"
                   >
                     {t.quickView}
@@ -183,7 +186,7 @@ export default function ProductGrid({
                   {t.inStock}
                 </span>
               </div>
-            </div>
+            </Link>
           );
         })}
       </div>

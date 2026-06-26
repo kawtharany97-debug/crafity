@@ -4,6 +4,7 @@ import { supabase } from './supabaseClient'; // Ensure this path is correct
 import Home from '../src/pages/Home';
 import CategoryPage from '../src/components/CategoryPage';
 import LabelPage from '../src/components/LabelPage';
+import ProductPage from '../src/components/ProductPage';
 
 
 export default function App() {
@@ -20,6 +21,10 @@ export default function App() {
   return (
   <BrowserRouter>
     <Routes>
+      <Route
+  path="/product/:productId"
+  element={<ProductPage allProducts={allProducts} />}
+/>
       <Route path="/" element={<Home allProducts={allProducts} />} />
       <Route
         path="/category/:categoryName"
