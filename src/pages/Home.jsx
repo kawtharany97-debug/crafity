@@ -102,7 +102,21 @@ export default function Home({ allProducts, lang, setLang }) {
     ],
   });
 
-  const [showcaseProducts, setShowcaseProducts] = useState([]);
+  const [showcaseProducts, setShowcaseProducts] = useState([
+  {
+    id: "hero-beads2",
+    badge: "TRENDING ITEM",
+    badgeAr: "منتج رائج",
+    name: "Elegant Beaded Evening Bag",
+    name_ar: "حقيبة سهرة مطرزة بالخرز",
+    price: "40 $",
+    image_url:
+      "https://difogkabffvfdmwyykcc.supabase.co/storage/v1/object/public/products/beads2.jpg",
+    description: "Beautiful handcrafted item.",
+    description_ar: "قطعة يدوية أنيقة مصنوعة بعناية.",
+    video: null,
+  },
+]);
 
   const isVideo = (url) => {
     if (!url) return false;
