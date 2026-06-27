@@ -79,26 +79,26 @@ export default function Home({ allProducts, lang, setLang }) {
   // Categories data remains unchanged...
   const [categoriesData, setCategoriesData] = useState({
     English: [
-      { categoryName: 'Macrame', icon: '/cat-macrame.jpg' },
-      { categoryName: 'Resin Art', icon: '/cat-resin.jpg' },
-      { categoryName: 'Candles', icon: '/cat-candles.jpg' },
-      { categoryName: 'Soap', icon: '/cat-soap.jpg' },
-      { categoryName: 'Crochet', icon: '/cat-crochet.jpg' },
-      { categoryName: 'Gypsum', icon: '/cat-gypsum.jpg' },
-      { categoryName: 'Beads', icon: '/cat-beads.jpg' },
-      { categoryName: 'Giftbox', icon: '/cat-giftbox.jpg' },
-      { categoryName: 'Tools & Supplies', icon: '/cat-supplies.jpg' },
+      { categoryName: 'Macrame', icon: '/cat-macrame.webp' },
+      { categoryName: 'Resin Art', icon: '/cat-resin.webp' },
+      { categoryName: 'Candles', icon: '/cat-candles.webp' },
+      { categoryName: 'Soap', icon: '/cat-soap.webp' },
+      { categoryName: 'Crochet', icon: '/cat-crochet.webp' },
+      { categoryName: 'Gypsum', icon: '/cat-gypsum.webp' },
+      { categoryName: 'Beads', icon: '/cat-beads.webp' },
+      { categoryName: 'Giftbox', icon: '/cat-giftbox.webp' },
+      { categoryName: 'Tools & Supplies', icon: '/cat-supplies.webp' },
     ],
     Arabic: [
-      { categoryName: 'المكرامية', icon: '/cat-macrame.jpg' },
-      { categoryName: 'أعمال الريزن', icon: '/cat-resin.jpg' },
-      { categoryName: 'الشموع', icon: '/cat-candles.jpg' },
-      { categoryName: 'الصابون الطبيعي', icon: '/cat-soap.jpg' },
-      { categoryName: 'الكروشيه', icon: '/cat-crochet.jpg' },
-      { categoryName: 'كونكريت', icon: '/cat-gypsum.jpg' },
-      { categoryName: 'خرز', icon: '/cat-beads.jpg' },
-      { categoryName: 'الهدايا والتذكارات', icon: '/cat-giftbox.jpg' },
-      { categoryName: 'الأدوات والمستلزمات', icon: '/cat-supplies.jpg' },
+      { categoryName: 'المكرامية', icon: '/cat-macrame.webp' },
+      { categoryName: 'أعمال الريزن', icon: '/cat-resin.webp' },
+      { categoryName: 'الشموع', icon: '/cat-candles.webp' },
+      { categoryName: 'الصابون الطبيعي', icon: '/cat-soap.webp' },
+      { categoryName: 'الكروشيه', icon: '/cat-crochet.webp' },
+      { categoryName: 'كونكريت', icon: '/cat-gypsum.webp' },
+      { categoryName: 'خرز', icon: '/cat-beads.webp' },
+      { categoryName: 'الهدايا والتذكارات', icon: '/cat-giftbox.webp' },
+      { categoryName: 'الأدوات والمستلزمات', icon: '/cat-supplies.webp' },
     ],
   });
 
@@ -129,7 +129,7 @@ export default function Home({ allProducts, lang, setLang }) {
             price: `${product.price} $`,
             image_url: product.image_url
               ? `${bucketUrl}${product.image_url.replace('/images/', '/')}`
-              : `${bucketUrl}/products/placeholder.jpg`,
+              : `${bucketUrl}/products/placeholder.webp`,
             description: product.description || 'Beautiful handcrafted item.',
             description_ar: product.description_ar || '',
             video: product.video,
