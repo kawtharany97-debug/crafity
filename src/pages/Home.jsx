@@ -144,14 +144,12 @@ export default function Home({ allProducts, lang, setLang }) {
 useEffect(() => {
   const startSlider = () => setSliderStarted(true);
 
-  window.addEventListener("scroll", startSlider, { once: true });
-  window.addEventListener("click", startSlider, { once: true });
-  window.addEventListener("touchstart", startSlider, { once: true });
+  window.addEventListener("pointerdown", startSlider, { once: true });
+  window.addEventListener("touchstart", startSlider, { once: true, passive: true });
   window.addEventListener("keydown", startSlider, { once: true });
 
   return () => {
-    window.removeEventListener("scroll", startSlider);
-    window.removeEventListener("click", startSlider);
+    window.removeEventListener("pointerdown", startSlider);
     window.removeEventListener("touchstart", startSlider);
     window.removeEventListener("keydown", startSlider);
   };
