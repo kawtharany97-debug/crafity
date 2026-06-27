@@ -611,18 +611,20 @@ useEffect(() => {
 
                   <div className="ml-4 flex gap-1.5">
                     {showcaseProducts.map((_, idx) => (
-                      <span
-                        key={idx}
-                        onClick={() => {
-                          setSliderDirection(idx > heroSliderIndex ? 1 : -1);
-                          setHeroSliderIndex(idx);
-                        }}
-                        className={`h-1.5 rounded-full cursor-pointer transition-all duration-300 ${
-                          idx === heroSliderIndex
-                            ? 'w-6 bg-[#d9779b]'
-                            : 'w-1.5 bg-stone-300'
-                        }`}
-                      />
+                      <button
+  key={idx}
+  type="button"
+  aria-label={`Go to slide ${idx + 1}`}
+  onClick={() => {
+    setSliderDirection(idx > heroSliderIndex ? 1 : -1);
+    setHeroSliderIndex(idx);
+  }}
+  className={`h-1.5 rounded-full cursor-pointer transition-all duration-300 ${
+    idx === heroSliderIndex
+      ? 'w-6 bg-[#d9779b]'
+      : 'w-1.5 bg-stone-300'
+  }`}
+/>
                     ))}
                   </div>
                 </div>
@@ -1002,7 +1004,7 @@ useEffect(() => {
           )}
         </AnimatePresence>
       </section>
-      
+
        </main>
 
       {/* Quick View Modal */}
