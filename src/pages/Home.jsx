@@ -481,9 +481,11 @@ useEffect(() => {
         <div className="max-w-7xl mx-auto px-6 py-2 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center justify-center md:justify-start min-w-[180px]">
             <img
-              src="/logo.png"
-              alt="Crafity Lebanon Handmade Crafts Store"
-              className="h-24 md:h-28 w-auto object-contain cursor-pointer transition-transform duration-200 active:scale-95"
+  src="/logo.png"
+  alt="Crafity Lebanon Handmade Crafts Store"
+  width="320"
+  height="160"
+  className="h-24 md:h-28 w-auto object-contain cursor-pointer transition-transform duration-200 active:scale-95"
               onClick={() => {
                 setSelectedCategory(null);
                 setSelectedShowcaseLabel(null);
@@ -771,6 +773,8 @@ useEffect(() => {
                             <img
                               src={getProductImage(product)}
                               alt={`${product.name} handmade craft by Crafity Lebanon`}
+                              width="400"
+                              height="500"
                               loading="lazy"
                               decoding="async"
                               className="w-full h-full object-cover select-none transition duration-700 group-hover:scale-105"
@@ -817,6 +821,8 @@ useEffect(() => {
                             <img
                               src={getProductImage(product)}
                               alt={`${product.name} handmade craft by Crafity Lebanon`}
+                              width="400"
+                              height="500"
                               loading="lazy"
                               decoding="async"
                               className="w-full h-full object-cover select-none transition duration-700 group-hover:scale-105"
