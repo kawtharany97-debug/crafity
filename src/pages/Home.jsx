@@ -619,12 +619,16 @@ useEffect(() => {
     setSliderDirection(idx > heroSliderIndex ? 1 : -1);
     setHeroSliderIndex(idx);
   }}
-  className={`h-1.5 rounded-full cursor-pointer transition-all duration-300 ${
-    idx === heroSliderIndex
-      ? 'w-6 bg-[#d9779b]'
-      : 'w-1.5 bg-stone-300'
-  }`}
-/>
+  className="w-10 h-10 flex items-center justify-center rounded-full"
+>
+  <span
+    className={`h-1.5 rounded-full transition-all duration-300 ${
+      idx === heroSliderIndex
+        ? 'w-6 bg-[#d9779b]'
+        : 'w-2 bg-stone-300'
+    }`}
+  />
+</button>
                     ))}
                   </div>
                 </div>
