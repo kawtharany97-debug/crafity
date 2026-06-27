@@ -15,6 +15,7 @@ export default function Home({ allProducts, lang, setLang }) {
   const [expandedDetails, setExpandedDetails] = useState({});
   const [heroSliderIndex, setHeroSliderIndex] = useState(0);
   const [sliderDirection, setSliderDirection] = useState(1);
+  const [sliderStarted, setSliderStarted] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const resultsRef = useRef(null);
   const [fullscreenImage, setFullscreenImage] = useState(null);
@@ -139,18 +140,34 @@ export default function Home({ allProducts, lang, setLang }) {
     }
     fetchProducts();
   }, []);
+
+useEffect(() => {
+  const startSlider = () => setSliderStarted(true);
+
+  window.addEventListener("scroll", startSlider, { once: true });
+  window.addEventListener("click", startSlider, { once: true });
+  window.addEventListener("touchstart", startSlider, { once: true });
+  window.addEventListener("keydown", startSlider, { once: true });
+
+  return () => {
+    window.removeEventListener("scroll", startSlider);
+    window.removeEventListener("click", startSlider);
+    window.removeEventListener("touchstart", startSlider);
+    window.removeEventListener("keydown", startSlider);
+  };
+}, []);
+
   // Auto-slide
-  useEffect(() => {
-    if (showcaseProducts.length <= 1) return;
+ useEffect(() => {
+  if (!sliderStarted || showcaseProducts.length <= 1) return;
 
-    const interval = setInterval(() => {
-      setSliderDirection(1);
+  const interval = setInterval(() => {
+    setSliderDirection(1);
+    setHeroSliderIndex((prev) => (prev + 1) % showcaseProducts.length);
+  }, 3000);
 
-      setHeroSliderIndex((prev) => (prev + 1) % showcaseProducts.length);
-    }, 3000);
-
-    return () => clearInterval(interval);
-  }, [showcaseProducts.length]);
+  return () => clearInterval(interval);
+}, [showcaseProducts.length, sliderStarted]);
 
   const changeSlide = (way) => {
     setSliderDirection(way);
@@ -655,7 +672,7 @@ export default function Home({ allProducts, lang, setLang }) {
                               muted
                               loop
                               playsInline
-                              preload="auto"
+                              preload="metadata"
                             />
                           ) : (
                             <img
@@ -1162,7 +1179,7 @@ export default function Home({ allProducts, lang, setLang }) {
         </div>
       )}
       {selectedCategory && showBackToTop && (
-        <div className="fixed bottom-8 left-1/2 -translate-x-1/2 w-full max-w-7xl px-6 z-50 flex justify-end">
+        <div className="fixed bottom-8 right-8 z-50">
           <button
             onClick={scrollToTop}
             className="w-16 h-16 rounded-full bg-[#fff9f6] border border-[#d9779b]/30 shadow-lg flex items-center justify-center hover:scale-105 transition"
