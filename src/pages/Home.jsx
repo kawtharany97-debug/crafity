@@ -292,14 +292,18 @@ useEffect(() => {
     if (iconSource.startsWith('/')) {
       return (
         <img
-          src={iconSource}
-          alt={altText}
-          className="absolute inset-0 w-full h-full object-cover rounded-2xl"
-          onError={(e) => {
-            e.target.style.display = 'none';
-            e.target.parentNode.innerText = '✨';
-          }}
-        />
+  src={iconSource}
+  alt={altText}
+  width="400"
+  height="400"
+  loading="lazy"
+  decoding="async"
+  className="absolute inset-0 w-full h-full object-cover rounded-2xl"
+  onError={(e) => {
+    e.target.style.display = 'none';
+    e.target.parentNode.innerText = '✨';
+  }}
+/>
       );
     }
     return iconSource;
