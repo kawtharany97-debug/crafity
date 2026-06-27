@@ -497,10 +497,12 @@ useEffect(() => {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder={t.searchPlaceholder}
+              aria-label={t.searchPlaceholder}
               className="w-full md:w-72 px-4 py-2 rounded-full border border-orange-100 bg-[#fffaf9] outline-none focus:ring-2 focus:ring-orange-200/50"
             />
             <select
               value={lang}
+              aria-label="Choose language"
               onChange={(e) => {
                 setLang(e.target.value);
                 setSelectedCategory(null);
@@ -514,6 +516,7 @@ useEffect(() => {
         </div>
       </header>
 
+      <main>
       {/* Premium Fashion Split Slider Engine */}
       <AnimatePresence mode="wait">
         {!selectedCategory && !selectedShowcaseLabel && (
@@ -563,6 +566,7 @@ useEffect(() => {
 
                 <div className="pt-6 flex items-center justify-center lg:justify-start gap-3">
                   <button
+                    aria-label="Previous slide"
                     onClick={() => changeSlide(-1)}
                     className="w-11 h-11 rounded-full bg-white/90 shadow-sm border border-stone-100 flex items-center justify-center text-stone-700 hover:bg-[#d9779b] hover:text-white transition active:scale-95"
                   >
@@ -584,6 +588,7 @@ useEffect(() => {
                   </button>
 
                   <button
+                    aria-label="Next slide"
                     onClick={() => changeSlide(1)}
                     className="w-11 h-11 rounded-full bg-white/90 shadow-sm border border-stone-100 flex items-center justify-center text-stone-700 hover:bg-[#d9779b] hover:text-white transition active:scale-95"
                   >
@@ -997,6 +1002,8 @@ useEffect(() => {
           )}
         </AnimatePresence>
       </section>
+      
+       </main>
 
       {/* Quick View Modal */}
       <AnimatePresence>
@@ -1064,6 +1071,7 @@ useEffect(() => {
                 <button
                   onClick={() => setQuickViewItem(null)}
                   className="py-3 rounded-full border border-stone-200 hover:bg-stone-50 text-stone-600 font-medium text-xs transition"
+                  aria-label="Close"
                 >
                   {t.close}
                 </button>
@@ -1071,6 +1079,7 @@ useEffect(() => {
             </motion.div>
           </motion.div>
         )}
+        
       </AnimatePresence>
       <section className="bg-gradient-to-r from-orange-50/30 to-rose-50/20 py-10 border-t border-b border-orange-50/60 text-center px-6">
         <p className="text-sm md:text-base font-light tracking-wide text-stone-600">
