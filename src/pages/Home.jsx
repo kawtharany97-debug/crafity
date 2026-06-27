@@ -687,6 +687,8 @@ useEffect(() => {
                             <img
   src={getProductImage(activeSlide)}
   alt={`${activeSlide.name} handmade craft by Crafity Lebanon`}
+  width="440"
+  height="500"
   loading="eager"
   fetchPriority="high"
   decoding="async"
