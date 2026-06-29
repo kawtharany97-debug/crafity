@@ -22,3 +22,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+upload-image-cache.cjs
+.env
+.env.local
+upload-image-cache.cjs
+convert-supabase-images.cjs
+my-images/
