@@ -23,7 +23,7 @@ export default function Home({ allProducts, lang, setLang }) {
   const [selectedShowcaseLabel, setSelectedShowcaseLabel] = useState(null);
 
   const getProductImage = (item) => {
-    const image = item?.image || item?.image_url || '';
+    const image = item?.image_url || item?.image || '';
     if (!image) return '';
 
     if (image.startsWith('http')) return image;
@@ -481,7 +481,7 @@ useEffect(() => {
         <div className="max-w-7xl mx-auto px-6 py-2 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center justify-center md:justify-start min-w-[180px]">
             <img
-  src="/logo.png"
+  src="/logo.webp"
   alt="Crafity Lebanon Handmade Crafts Store"
   width="320"
   height="160"
