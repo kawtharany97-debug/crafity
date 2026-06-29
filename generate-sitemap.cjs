@@ -1,6 +1,6 @@
 const fs = require("fs");
 
-const SITE_URL = "https://www.crafity-lb.com";
+const SITE_URL = "https://crafity-lb.com";
 
 const categories = [
   "macrame",

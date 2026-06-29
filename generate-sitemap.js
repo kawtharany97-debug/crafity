@@ -2,7 +2,7 @@ const { SitemapStream, streamToPromise } = require('sitemap');
 const { createWriteStream } = require('fs');
 
 const sitemap = new SitemapStream({
-  hostname: 'https://www.crafity-lb.com',
+  hostname: 'https://crafity-lb.com',
 });
 
 const writeStream = createWriteStream('./public/sitemap.xml');

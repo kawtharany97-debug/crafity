@@ -4,25 +4,25 @@
 
 ## Main Website
 
-* [Home](https://www.crafity-lb.com/): Handmade crafts, gifts, and supplies by Crafity Lebanon.
-* [Sitemap](https://www.crafity-lb.com/sitemap.xml): Full list of public website pages for search engines and crawlers.
+* [Home](https://crafity-lb.com/): Handmade crafts, gifts, and supplies by Crafity Lebanon.
+* [Sitemap](https://crafity-lb.com/sitemap.xml): Full list of public website pages for search engines and crawlers.
 
 ## Product Categories
 
-* [Macrame](https://www.crafity-lb.com/category/macrame): Handmade macrame products.
-* [Resin Art](https://www.crafity-lb.com/category/resin): Resin art creations and handmade decorative pieces.
-* [Candles](https://www.crafity-lb.com/category/candles): Handmade candles.
-* [Soap](https://www.crafity-lb.com/category/soap): Handmade natural soap.
-* [Crochet](https://www.crafity-lb.com/category/crochet): Handmade crochet items.
-* [Gypsum](https://www.crafity-lb.com/category/gypsum): Gypsum and concrete-style handmade art.
-* [Beads](https://www.crafity-lb.com/category/beads): Beaded handmade accessories and products.
-* [Giftbox](https://www.crafity-lb.com/category/giftbox): Gift boxes, souvenirs, and special handmade gifts.
-* [Tools and Supplies](https://www.crafity-lb.com/category/supplies): Craft supplies and essential handmade materials.
+* [Macrame](https://crafity-lb.com/category/macrame): Handmade macrame products.
+* [Resin Art](https://crafity-lb.com/category/resin): Resin art creations and handmade decorative pieces.
+* [Candles](https://crafity-lb.com/category/candles): Handmade candles.
+* [Soap](https://crafity-lb.com/category/soap): Handmade natural soap.
+* [Crochet](https://crafity-lb.com/category/crochet): Handmade crochet items.
+* [Gypsum](https://crafity-lb.com/category/gypsum): Gypsum and concrete-style handmade art.
+* [Beads](https://crafity-lb.com/category/beads): Beaded handmade accessories and products.
+* [Giftbox](https://crafity-lb.com/category/giftbox): Gift boxes, souvenirs, and special handmade gifts.
+* [Tools and Supplies](https://crafity-lb.com/category/supplies): Craft supplies and essential handmade materials.
 
 ## Collections
 
-* [Best Sellers](https://www.crafity-lb.com/label/best-seller): Popular handmade products from Crafity Lebanon.
-* [New Arrivals](https://www.crafity-lb.com/label/new-arrival): Recently added handmade products.
+* [Best Sellers](https://crafity-lb.com/label/best-seller): Popular handmade products from Crafity Lebanon.
+* [New Arrivals](https://crafity-lb.com/label/new-arrival): Recently added handmade products.
 
 ## Contact and Social Profiles
 

@@ -115,7 +115,7 @@ const categoryDescription =
 
     <link
       rel="canonical"
-      href={`https://www.crafity-lb.com/category/${categoryName}`}
+      href={`https://crafity-lb.com/category/${categoryName}`}
     />
   </Helmet>
 

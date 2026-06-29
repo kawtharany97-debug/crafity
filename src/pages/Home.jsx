@@ -458,7 +458,7 @@ useEffect(() => {
 
   <link
     rel="canonical"
-    href={`https://www.crafity-lb.com${
+    href={`https://crafity-lb.com${
       window.location.pathname
     }`}
   />

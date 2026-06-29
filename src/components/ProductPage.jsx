@@ -67,7 +67,7 @@ export default function ProductPage({ allProducts }) {
       price: productPrice,
       priceCurrency: "USD",
       availability: "https://schema.org/InStock",
-      url: `https://www.crafity-lb.com/product/${product.id}`,
+      url: `https://crafity-lb.com/product/${product.id}`,
     },
   };
 
@@ -97,7 +97,7 @@ export default function ProductPage({ allProducts }) {
 
   <link
     rel="canonical"
-    href={`https://www.crafity-lb.com/product/${product.id}`}
+    href={`https://crafity-lb.com/product/${product.id}`}
   />
 
   <script type="application/ld+json">

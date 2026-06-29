@@ -70,7 +70,7 @@ const pageDescription =
 
     <link
       rel="canonical"
-      href={`https://www.crafity-lb.com/label/${labelName}`}
+      href={`https://crafity-lb.com/label/${labelName}`}
     />
   </Helmet>
 
