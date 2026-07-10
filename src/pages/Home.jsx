@@ -477,54 +477,50 @@ useEffect(() => {
     </h1>
 
       {/* Navbar */}
-      <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-orange-50 shadow-sm overflow-hidden">
-  <div className="w-full px-6 py-0 h-[95px] flex flex-row items-center justify-between gap-4 overflow-hidden">
-
-    <div className="h-full flex items-center justify-start w-[560px] ml-4 md:ml-6 overflow-hidden">
-      <img
-        src="/logo.webp"
-        alt="Crafity Lebanon Handmade Crafts Store"
-        width="320"
-        height="160"
-        className="h-[82px] w-auto max-w-[500px] object-contain object-left cursor-pointer transition-transform duration-200 active:scale-95"
-        onClick={() => {
-          setSelectedCategory(null);
-          setSelectedShowcaseLabel(null);
-          setSearchTerm('');
-        }}
-        onError={(e) => {
-          e.target.style.display = 'none';
-          e.target.parentNode.innerHTML = `<div class="text-3xl font-light tracking-wide text-[#d9779b] py-4">${t.logo}</div>`;
-        }}
-      />
-    </div>
-
-    <div className="flex items-center gap-3 w-full md:w-auto">
-      <input
-        type="text"
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        placeholder={t.searchPlaceholder}
-        aria-label={t.searchPlaceholder}
-        className="w-full md:w-72 px-4 py-2 rounded-full border border-orange-100 bg-[#fffaf9] outline-none focus:ring-2 focus:ring-orange-200/50"
-      />
-
-      <select
-        value={lang}
-        aria-label="Choose language"
-        onChange={(e) => {
-          setLang(e.target.value);
-          setSelectedCategory(null);
-        }}
-        className="px-4 py-2 rounded-full border border-orange-100 bg-white text-[#4b3d39]"
-      >
-        <option value="English">English</option>
-        <option value="Arabic">العربية</option>
-      </select>
-    </div>
-
-  </div>
-</header>
+      <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-orange-50 shadow-sm">
+        <div className="max-w-7xl mx-auto px-6 py-2 flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="flex items-center justify-center md:justify-start min-w-[180px]">
+            <img
+  src="/logo.webp"
+  alt="Crafity Lebanon Handmade Crafts Store"
+  width="320"
+  height="160"
+  className="h-24 md:h-28 w-auto object-contain cursor-pointer transition-transform duration-200 active:scale-95"
+              onClick={() => {
+                setSelectedCategory(null);
+                setSelectedShowcaseLabel(null);
+                setSearchTerm('');
+              }}
+              onError={(e) => {
+                e.target.style.display = 'none';
+                e.target.parentNode.innerHTML = `<div class="text-3xl font-light tracking-wide text-[#d9779b] py-4">${t.logo}</div>`;
+              }}
+            />
+          </div>
+          <div className="flex items-center gap-3 w-full md:w-auto">
+            <input
+              type="text"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder={t.searchPlaceholder}
+              aria-label={t.searchPlaceholder}
+              className="w-full md:w-72 px-4 py-2 rounded-full border border-orange-100 bg-[#fffaf9] outline-none focus:ring-2 focus:ring-orange-200/50"
+            />
+            <select
+              value={lang}
+              aria-label="Choose language"
+              onChange={(e) => {
+                setLang(e.target.value);
+                setSelectedCategory(null);
+              }}
+              className="px-4 py-2 rounded-full border border-orange-100 bg-white text-[#4b3d39]"
+            >
+              <option value="English">English</option>
+              <option value="Arabic">العربية</option>
+            </select>
+          </div>
+        </div>
+      </header>
 
       <main>
       {/* Premium Fashion Split Slider Engine */}

@@ -42,72 +42,53 @@ const formattedCategory =
 
 const categoryDescriptions = {
   macrame:
-    "Crafity offers handmade macrame in Lebanon, including wall hangings, plant hangers, lamps, shelves, keychains and elegant home decor pieces. Each macrame item is crafted with care, making it perfect for handmade gifts, boho decoration and warm artistic spaces.",
+    "Discover handmade macrame products in Lebanon, including wall hangings, lamps, shelves, keychains, plant hangers, and home decor pieces crafted with care by Crafity.",
   resin:
-    "Crafity offers handmade resin art in Lebanon, including decorative trays, coasters, accessories, home decor pieces and personalized resin gifts. Each piece is crafted with care, making it perfect for birthdays, souvenirs, events and elegant handmade gifts.",
+  "Crafity offers handmade resin art in Lebanon, including decorative trays, coasters, accessories, home decor pieces and personalized resin gifts. Each piece is crafted with care, making it perfect for birthdays, souvenirs, events and elegant handmade gifts.",
   candles:
-    "Crafity offers handmade candles in Lebanon for gifts, home decoration, events and cozy spaces. Discover elegant candle designs made with love, perfect for birthdays, souvenirs, romantic gifts and artistic handmade decor.",
+    "Explore handmade candles in Lebanon made for gifts, home decoration, events, and cozy spaces. Crafity offers elegant candle designs crafted with love.",
   soap:
-    "Crafity offers handmade soap in Lebanon with artistic shapes, beautiful colors and elegant gift-ready designs. These handmade soap pieces are perfect for souvenirs, personal gifts, events and decorative bathroom displays.",
+    "Find handmade soap in Lebanon with beautiful artistic designs, perfect for gifts, souvenirs, and personal use.",
   crochet:
-    "Crafity offers handmade crochet in Lebanon, including accessories, bags, baby items, decorative pieces and creative gifts. Each crochet product is made with soft materials and careful details for a warm handmade touch.",
+    "Browse crochet gifts in Lebanon, including handmade accessories, decorations, baby items, and creative pieces made with soft materials.",
   gypsum:
-    "Crafity offers handmade gypsum and concrete-style art in Lebanon, including trays, home decor pieces, souvenirs and elegant decorative items. These handmade designs are perfect for gifts, events and modern artistic spaces.",
+    "Shop handmade gypsum and concrete art in Lebanon, including home decor, trays, souvenirs, and elegant decorative pieces.",
   beads:
-    "Crafity offers beads and handmade beaded accessories in Lebanon for bags, jewelry, decorations and creative DIY projects. Discover elegant beaded handmade items and craft materials designed for unique gifts and artistic creations.",
+    "Discover beads and handmade accessories in Lebanon for jewelry making, crafts, decorations, and creative DIY projects.",
   giftbox:
-    "Crafity offers handmade gift boxes and souvenirs in Lebanon for birthdays, weddings, baby showers, events and special occasions. Discover elegant gift ideas, personalized souvenirs and handmade boxes crafted with love.",
+    "Explore handmade gift boxes and souvenirs in Lebanon, perfect for birthdays, events, weddings, baby showers, and special occasions.",
   supplies:
-    "Crafity offers craft supplies in Lebanon for macrame, resin, crochet, beads, candles, gypsum and DIY handmade projects. Find essential materials and creative supplies for artists, crafters and handmade business owners.",
+    "Shop craft supplies in Lebanon, including materials for macrame, resin, crochet, beads, candles, gypsum, and DIY handmade projects.",
 };
 
-const categorySeo = {
-  macrame: {
-    title: "Macrame Lebanon | Handmade Macrame Decor & Gifts | Crafity",
-    description:
-      "Shop handmade macrame in Lebanon from Crafity. Discover wall hangings, plant hangers, lamps, shelves, keychains and elegant handmade decor.",
-  },
+const categoryDescription =
+  categoryDescriptions[categoryName] ||
+  `Shop handmade ${formattedCategory} products from Crafity Lebanon.`;
+
+  const categorySeo = {
   resin: {
     title: "Resin Art Lebanon | Handmade Resin Gifts, Trays & Decor | Crafity",
     description:
       "Shop handmade resin art in Lebanon from Crafity. Discover resin trays, coasters, decor pieces, accessories and personalized handmade gifts.",
+  },
+  macrame: {
+    title: "Macrame Lebanon | Handmade Macrame Decor & Gifts | Crafity",
+    description:
+      "Shop handmade macrame in Lebanon from Crafity. Discover wall hangings, plant hangers, lamps, shelves, keychains and elegant handmade decor.",
   },
   candles: {
     title: "Handmade Candles Lebanon | Elegant Candle Gifts | Crafity",
     description:
       "Shop handmade candles in Lebanon from Crafity. Discover elegant candle gifts, home decor candles and artistic candle designs made with love.",
   },
-  soap: {
-    title: "Handmade Soap Lebanon | Artistic Soap Gifts | Crafity",
-    description:
-      "Shop handmade soap in Lebanon from Crafity. Discover artistic soap designs, souvenirs, event gifts and elegant handmade soap pieces.",
-  },
-  crochet: {
-    title: "Crochet Lebanon | Handmade Crochet Gifts & Accessories | Crafity",
-    description:
-      "Shop handmade crochet in Lebanon from Crafity. Discover crochet bags, accessories, baby items, decor pieces and creative handmade gifts.",
-  },
-  gypsum: {
-    title: "Gypsum Art Lebanon | Handmade Decor & Souvenirs | Crafity",
-    description:
-      "Shop handmade gypsum and concrete-style art in Lebanon from Crafity. Discover trays, decor pieces, souvenirs and elegant handmade gifts.",
-  },
-  beads: {
-    title: "Beads Lebanon | Handmade Beaded Accessories & Supplies | Crafity",
-    description:
-      "Shop beads and handmade beaded accessories in Lebanon from Crafity. Discover beaded bags, jewelry materials, decorations and craft supplies.",
-  },
-  giftbox: {
-    title: "Gift Box Lebanon | Handmade Gift Boxes & Souvenirs | Crafity",
-    description:
-      "Shop handmade gift boxes and souvenirs in Lebanon from Crafity. Discover elegant gifts for birthdays, weddings, baby showers and events.",
-  },
-  supplies: {
-    title: "Craft Supplies Lebanon | Handmade Materials & Tools | Crafity",
-    description:
-      "Shop craft supplies in Lebanon from Crafity. Find materials for macrame, resin, crochet, beads, candles, gypsum and DIY handmade projects.",
-  },
 };
+
+const pageTitle =
+  categorySeo[categoryName]?.title || `${formattedCategory} | Crafity Lebanon`;
+
+const pageDescription =
+  categorySeo[categoryName]?.description ||
+  `Shop handmade ${formattedCategory} products from Crafity Lebanon. Discover premium handcrafted gifts and craft supplies.`;
 
   const [showBackToTop, setShowBackToTop] = useState(false);
 
