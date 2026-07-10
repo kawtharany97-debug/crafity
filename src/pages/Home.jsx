@@ -478,14 +478,15 @@ useEffect(() => {
 
       {/* Navbar */}
       <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-orange-50 shadow-sm">
-  <div className="max-w-7xl mx-auto px-6 py-0 h-[120px] flex flex-row items-center justify-between gap-4">
-    <div className="flex items-center justify-start min-w-[360px]">
+  <div className="w-full px-6 py-0 h-[95px] flex flex-row items-center justify-between gap-4">
+
+    <div className="flex items-center justify-start w-[640px] -ml-2">
       <img
         src="/logo.webp"
         alt="Crafity Lebanon Handmade Crafts Store"
-        width="1200"
-        height="480"
-       className="h-[110px] w-auto object-contain cursor-pointer transition-transform duration-200 active:scale-95"
+        width="1600"
+        height="500"
+        className="h-[82px] w-[520px] object-contain object-left cursor-pointer transition-transform duration-200 active:scale-95"
         onClick={() => {
           setSelectedCategory(null);
           setSelectedShowcaseLabel(null);
@@ -497,30 +498,33 @@ useEffect(() => {
         }}
       />
     </div>
+
     <div className="flex items-center gap-3 w-full md:w-auto">
-            <input
-              type="text"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder={t.searchPlaceholder}
-              aria-label={t.searchPlaceholder}
-              className="w-full md:w-72 px-4 py-2 rounded-full border border-orange-100 bg-[#fffaf9] outline-none focus:ring-2 focus:ring-orange-200/50"
-            />
-            <select
-              value={lang}
-              aria-label="Choose language"
-              onChange={(e) => {
-                setLang(e.target.value);
-                setSelectedCategory(null);
-              }}
-              className="px-4 py-2 rounded-full border border-orange-100 bg-white text-[#4b3d39]"
-            >
-              <option value="English">English</option>
-              <option value="Arabic">العربية</option>
-            </select>
-          </div>
-        </div>
-      </header>
+      <input
+        type="text"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        placeholder={t.searchPlaceholder}
+        aria-label={t.searchPlaceholder}
+        className="w-full md:w-72 px-4 py-2 rounded-full border border-orange-100 bg-[#fffaf9] outline-none focus:ring-2 focus:ring-orange-200/50"
+      />
+
+      <select
+        value={lang}
+        aria-label="Choose language"
+        onChange={(e) => {
+          setLang(e.target.value);
+          setSelectedCategory(null);
+        }}
+        className="px-4 py-2 rounded-full border border-orange-100 bg-white text-[#4b3d39]"
+      >
+        <option value="English">English</option>
+        <option value="Arabic">العربية</option>
+      </select>
+    </div>
+
+  </div>
+</header>
 
       <main>
       {/* Premium Fashion Split Slider Engine */}
