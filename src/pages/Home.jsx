@@ -486,7 +486,7 @@ useEffect(() => {
         alt="Crafity Lebanon Handmade Crafts Store"
         width="320"
         height="160"
-        className="h-[18px] w-auto object-contain origin-left scale-[15] cursor-pointer transition-transform duration-200 active:scale-[14.8]"
+        className="h-[18px] w-auto object-contain origin-left scale-[10] cursor-pointer transition-transform duration-200 active:scale-[14.8]"
         onClick={() => {
           setSelectedCategory(null);
           setSelectedShowcaseLabel(null);
