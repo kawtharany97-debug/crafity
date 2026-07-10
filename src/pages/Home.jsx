@@ -479,13 +479,13 @@ useEffect(() => {
       {/* Navbar */}
       <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-orange-50 shadow-sm">
         <div className="max-w-7xl mx-auto px-6 py-2 flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center justify-center md:justify-start min-w-[180px]">
+          <div className="flex items-center justify-center md:justify-start min-w-[520px]">
             <img
   src="/logo.webp"
   alt="Crafity Lebanon Handmade Crafts Store"
-  width="320"
-  height="160"
-  className="h-24 md:h-28 w-auto object-contain cursor-pointer transition-transform duration-200 active:scale-95"
+  width="1200"
+  height="480"
+  className="h-40 md:h-56 lg:h-64 w-auto object-contain cursor-pointer transition-transform duration-200 active:scale-95"
               onClick={() => {
                 setSelectedCategory(null);
                 setSelectedShowcaseLabel(null);
