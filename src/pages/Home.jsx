@@ -480,13 +480,13 @@ useEffect(() => {
       <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-orange-50 shadow-sm overflow-visible">
   <div className="w-full px-6 py-0 h-[95px] flex flex-row items-center justify-between gap-4 overflow-visible">
 
-    <div className="flex items-center justify-start w-[360px] -ml-1 overflow-visible">
+    <div className="flex items-center justify-start w-[900px] -ml-1 overflow-visible">
       <img
         src="/logo.webp"
         alt="Crafity Lebanon Handmade Crafts Store"
         width="320"
         height="160"
-        className="h-[18px] w-auto object-contain origin-left scale-[5] cursor-pointer transition-transform duration-200 active:scale-[4.9]"
+        className="h-[18px] w-auto object-contain origin-left scale-[15] cursor-pointer transition-transform duration-200 active:scale-[14.8]"
         onClick={() => {
           setSelectedCategory(null);
           setSelectedShowcaseLabel(null);
