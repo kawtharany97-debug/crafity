@@ -121,24 +121,6 @@ const pageDescription =
   `Shop handmade ${formattedCategory} products from Crafity Lebanon. Discover premium handcrafted gifts and craft supplies.`;
 
 
-  const categorySeo = {
-  resin: {
-    title: "Resin Art Lebanon | Handmade Resin Gifts, Trays & Decor | Crafity",
-    description:
-      "Shop handmade resin art in Lebanon from Crafity. Discover resin trays, coasters, decor pieces, accessories and personalized handmade gifts.",
-  },
-  macrame: {
-    title: "Macrame Lebanon | Handmade Macrame Decor & Gifts | Crafity",
-    description:
-      "Shop handmade macrame in Lebanon from Crafity. Discover wall hangings, plant hangers, lamps, shelves, keychains and elegant handmade decor.",
-  },
-  candles: {
-    title: "Handmade Candles Lebanon | Elegant Candle Gifts | Crafity",
-    description:
-      "Shop handmade candles in Lebanon from Crafity. Discover elegant candle gifts, home decor candles and artistic candle designs made with love.",
-  },
-};
-
 const pageTitle =
   categorySeo[categoryName]?.title || `${formattedCategory} | Crafity Lebanon`;
 
