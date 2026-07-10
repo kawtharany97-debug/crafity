@@ -478,26 +478,26 @@ useEffect(() => {
 
       {/* Navbar */}
       <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-orange-50 shadow-sm">
-        <div className="max-w-7xl mx-auto px-6 py-2 flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center justify-center md:justify-start min-w-[520px]">
-            <img
-  src="/logo.webp"
-  alt="Crafity Lebanon Handmade Crafts Store"
-  width="1200"
-  height="480"
-  className="h-40 md:h-56 lg:h-64 w-auto object-contain cursor-pointer transition-transform duration-200 active:scale-95"
-              onClick={() => {
-                setSelectedCategory(null);
-                setSelectedShowcaseLabel(null);
-                setSearchTerm('');
-              }}
-              onError={(e) => {
-                e.target.style.display = 'none';
-                e.target.parentNode.innerHTML = `<div class="text-3xl font-light tracking-wide text-[#d9779b] py-4">${t.logo}</div>`;
-              }}
-            />
-          </div>
-          <div className="flex items-center gap-3 w-full md:w-auto">
+  <div className="max-w-7xl mx-auto px-6 py-0 flex flex-col md:flex-row items-center justify-between gap-2">
+    <div className="flex items-center justify-center md:justify-start min-w-[520px]">
+      <img
+        src="/logo.webp"
+        alt="Crafity Lebanon Handmade Crafts Store"
+        width="1200"
+        height="480"
+        className="h-32 md:h-44 lg:h-48 w-auto object-contain cursor-pointer transition-transform duration-200 active:scale-95"
+        onClick={() => {
+          setSelectedCategory(null);
+          setSelectedShowcaseLabel(null);
+          setSearchTerm('');
+        }}
+        onError={(e) => {
+          e.target.style.display = 'none';
+          e.target.parentNode.innerHTML = `<div class="text-3xl font-light tracking-wide text-[#d9779b] py-4">${t.logo}</div>`;
+        }}
+      />
+    </div>
+    <div className="flex items-center gap-3 w-full md:w-auto">
             <input
               type="text"
               value={searchTerm}
