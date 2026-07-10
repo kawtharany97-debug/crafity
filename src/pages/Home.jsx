@@ -477,24 +477,20 @@ useEffect(() => {
     </h1>
 
       {/* Navbar */}
-      <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-orange-50 shadow-sm overflow-visible">
-  <div className="w-full px-6 py-0 h-[95px] flex flex-row items-center justify-between gap-4 overflow-visible">
+      <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-orange-50 shadow-sm overflow-hidden">
+  <div className="w-full px-6 py-0 h-[95px] flex flex-row items-center justify-between gap-4 overflow-hidden">
 
-    <div className="flex items-center justify-start w-[900px] -ml-1 overflow-visible">
+    <div className="h-full flex items-center justify-start w-[900px] -ml-1 overflow-hidden">
       <img
         src="/logo.webp"
         alt="Crafity Lebanon Handmade Crafts Store"
         width="320"
         height="160"
-        className="h-[18px] w-auto object-contain origin-left scale-[10] cursor-pointer transition-transform duration-200 active:scale-[14.8]"
+        className="h-[72px] w-[360px] md:w-[420px] object-contain object-left cursor-pointer transition-transform duration-200 active:scale-95"
         onClick={() => {
           setSelectedCategory(null);
           setSelectedShowcaseLabel(null);
           setSearchTerm('');
-        }}
-        onError={(e) => {
-          e.target.style.display = 'none';
-          e.target.parentNode.innerHTML = `<div class="text-3xl font-light tracking-wide text-[#d9779b] py-4">${t.logo}</div>`;
         }}
       />
     </div>
