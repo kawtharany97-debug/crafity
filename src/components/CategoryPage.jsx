@@ -109,25 +109,6 @@ const categorySeo = {
   },
 };
 
-const categoryDescription =
-  categoryDescriptions[categoryName] ||
-  `Shop handmade ${formattedCategory} products from Crafity Lebanon.`;
-
-const pageTitle =
-  categorySeo[categoryName]?.title || `${formattedCategory} | Crafity Lebanon`;
-
-const pageDescription =
-  categorySeo[categoryName]?.description ||
-  `Shop handmade ${formattedCategory} products from Crafity Lebanon. Discover premium handcrafted gifts and craft supplies.`;
-
-
-const pageTitle =
-  categorySeo[categoryName]?.title || `${formattedCategory} | Crafity Lebanon`;
-
-const pageDescription =
-  categorySeo[categoryName]?.description ||
-  `Shop handmade ${formattedCategory} products from Crafity Lebanon. Discover premium handcrafted gifts and craft supplies.`;
-
   const [showBackToTop, setShowBackToTop] = useState(false);
 
   const filteredProducts = allProducts.filter(
