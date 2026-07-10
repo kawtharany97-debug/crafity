@@ -120,9 +120,6 @@ const pageDescription =
   categorySeo[categoryName]?.description ||
   `Shop handmade ${formattedCategory} products from Crafity Lebanon. Discover premium handcrafted gifts and craft supplies.`;
 
-const categoryDescription =
-  categoryDescriptions[categoryName] ||
-  `Shop handmade ${formattedCategory} products from Crafity Lebanon.`;
 
   const categorySeo = {
   resin: {
