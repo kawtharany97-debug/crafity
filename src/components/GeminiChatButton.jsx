@@ -1,4 +1,4 @@
-import GeminiChatButton from "./components/GeminiChatButton";
+
 export default function GeminiChatButton() {
   const gemUrl = "https://gemini.google.com/gem/1CaYthHSZqohvXApzHXXqA3atpqs6ZLR1?usp=sharing";
 
