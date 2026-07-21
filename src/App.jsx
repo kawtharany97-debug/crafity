@@ -6,7 +6,7 @@ import Home from '../src/pages/Home';
 import CategoryPage from '../src/components/CategoryPage';
 import LabelPage from '../src/components/LabelPage';
 import ProductPage from '../src/components/ProductPage';
-
+import GeminiChatButton from './components/GeminiChatButton';
 
 export default function App() {
   const [allProducts, setAllProducts] = useState([]);
@@ -68,7 +68,9 @@ export default function App() {
   />
 </Routes>
 
-    <SpeedInsights />
+<GeminiChatButton />
+
+<SpeedInsights />
   </BrowserRouter>
 );
 }
