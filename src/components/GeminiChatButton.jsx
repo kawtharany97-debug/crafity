@@ -1,6 +1,8 @@
+export default function GeminiChatButton({ lang = "English" }) {
+  const gemUrl =
+    "https://gemini.google.com/gem/1CaYthHSZqohvXApzHXXqA3atpqs6ZLR1?usp=sharing";
 
-export default function GeminiChatButton() {
-  const gemUrl = "https://gemini.google.com/gem/1CaYthHSZqohvXApzHXXqA3atpqs6ZLR1?usp=sharing";
+  const isArabic = lang === "Arabic";
 
   return (
     <a
@@ -8,14 +10,19 @@ export default function GeminiChatButton() {
       target="_blank"
       rel="noopener noreferrer"
       className="gemini-chat-button"
-      aria-label="Open our AI assistant"
+      aria-label={
+        isArabic
+          ? "افتح المساعد الذكي"
+          : "Open the AI assistant"
+      }
+      dir={isArabic ? "rtl" : "ltr"}
     >
       <span className="gemini-chat-icon" aria-hidden="true">
         ✦
       </span>
 
       <span className="gemini-chat-text">
-        اسأل المساعد الذكي
+        {isArabic ? "اسأل المساعد الذكي" : "Ask the AI Assistant"}
       </span>
     </a>
   );

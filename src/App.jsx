@@ -68,7 +68,7 @@ export default function App() {
   />
 </Routes>
 
-<GeminiChatButton />
+<GeminiChatButton lang={lang} />
 
 <SpeedInsights />
   </BrowserRouter>
